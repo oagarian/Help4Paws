@@ -13,7 +13,7 @@ class _ReceptionPageState extends State<ReceptionPage> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: Color.fromARGB(255, 242, 178, 177),
+        backgroundColor: const Color.fromARGB(255, 242, 178, 177),
         body:  InkWell(
           onTap: () {
             Navigator.pushNamed(context, '/principal');
@@ -34,7 +34,7 @@ class _ReceptionPageState extends State<ReceptionPage> {
             Container(
                 width: double.infinity,
                 height: double.infinity,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
@@ -52,7 +52,7 @@ class _ReceptionPageState extends State<ReceptionPage> {
               
             ),
             
-            Column(
+            const Column(
               children: [
                 SizedBox(height: 75),
                 CircleAvatar(
