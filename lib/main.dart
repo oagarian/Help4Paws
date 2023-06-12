@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:help4paws/pages/founders_page.dart';
 import 'package:help4paws/pages/reception_page.dart';
 import 'package:help4paws/pages/principal_page.dart';
 
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/start': (context) => const ReceptionPage(),
         '/principal': (context) => const PrincipalPage(),
+        '/founders': (context) => const FoundersPage(),
       }
     );
   }
