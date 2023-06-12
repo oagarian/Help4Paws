@@ -101,14 +101,14 @@ class _FoundersPageState extends State<FoundersPage> {
         child: Row(
           children: [
             CircleAvatar(
-              radius: 60,
+              radius: 45,
               backgroundImage: NetworkImage('$avatar')
                   ,
             ),
             Flexible(
               child: Text(
                     '   $name \n\n      $desc',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
             ),
           ],
