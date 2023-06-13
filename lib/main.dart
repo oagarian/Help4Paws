@@ -14,7 +14,9 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(initialRoute: '/start', routes: {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      initialRoute: '/start', routes: {
       '/start': (context) => const ReceptionPage(),
       '/principal': (context) => const PrincipalPage(),
       '/founders': (context) => const FoundersPage(),
