@@ -18,7 +18,6 @@ class _FoundersPageState extends State<FoundersPage> {
             children: [
               buildColumnTitulo(),
               buildColumnSubtitulo(),
-            
               buildContainerAvatar(
                 avatar: 'https://cdn6.campograndenews.com.br/uploads/noticias/2022/06/21/84jnw1cd8irs.jpeg',
                 name: 'Aline Rafaela',
@@ -50,7 +49,7 @@ class _FoundersPageState extends State<FoundersPage> {
 
   buildAppBar() {
     return AppBar(
-      backgroundColor: Color(0xFFB6D2D5),
+      backgroundColor: Color.fromRGBO(226, 248, 243, 1),
       leading: IconButton(
         icon: Icon(
           Icons.arrow_back,
@@ -101,14 +100,14 @@ class _FoundersPageState extends State<FoundersPage> {
         child: Row(
           children: [
             CircleAvatar(
-              radius: 45,
+              radius: 35,
               backgroundImage: NetworkImage('$avatar')
                   ,
             ),
             Flexible(
               child: Text(
                     '   $name \n\n      $desc',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
             ),
           ],
