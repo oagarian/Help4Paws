@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:help4paws/pages/details_page.dart';
 class AssociatedPage extends StatefulWidget {
@@ -111,20 +112,22 @@ class _AssociatedPageState extends State<AssociatedPage> {
                   child: Column(
                     children: [
                       Center(
-                        child: Text(
+                        child: AutoSizeText(
                           "$name",
+                          minFontSize: 20,
+                          maxFontSize: 25,
                           style: TextStyle(
-                            fontSize: 25,
                             color: Color.fromRGBO(19, 42, 68, 1),
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
-                      Text(
+                      AutoSizeText(
                         "$desc",
+                        minFontSize: 16,
+                        maxFontSize: 20,
                         style: TextStyle(
                           color: Color.fromRGBO(19, 42, 68, 1),
-                          fontSize: 20,
                           overflow: TextOverflow.clip,
                         ),
                         textDirection: TextDirection.rtl,
@@ -135,29 +138,31 @@ class _AssociatedPageState extends State<AssociatedPage> {
               ],
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Flexible(
-                child: Text(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                child: AutoSizeText(
                   "Contato: \n$email \n$number",
+                  minFontSize: 16,
+                  maxFontSize: 20,
                   style: TextStyle(
                     color: Color.fromRGBO(156, 24, 24, 1),
-                    fontSize: 20,
                   ),
                 ),
               ),
               SizedBox(width: 10),
               Flexible(
-                child: Text(
+                child: AutoSizeText(
                   "Endereço: \n$street \n$descAdr",
+                  minFontSize: 16,
+                  maxFontSize: 20,
                   style: TextStyle(
                     color: Color.fromRGBO(156, 24, 24, 1),
-                    fontSize: 20,
                   ),
                 ),
               ),
-              ],
-            ),
+            ],
+          ),
             SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {

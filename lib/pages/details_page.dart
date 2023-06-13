@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 class DetailsPage extends StatefulWidget {
   final String image;
@@ -80,11 +81,12 @@ class _DetailsPageState extends State<DetailsPage> {
               color: Color.fromRGBO(19, 42, 68, 1),
             ),
           ),
-          Text(
+          AutoSizeText(
             '$desc',
+            minFontSize: 20,
+            maxFontSize: 26,
             textAlign: TextAlign.justify,
             style: TextStyle(
-              fontSize: 26,
               fontFamily: 'Cardo',
               color: Color.fromRGBO(19, 42, 68, 1),
             ),
@@ -93,21 +95,23 @@ class _DetailsPageState extends State<DetailsPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
-                child: Text(
+                child: AutoSizeText(
                   "Contato: \n$email \n$number",
+                  minFontSize: 16,
+                  maxFontSize: 20,
                   style: TextStyle(
                     color: Color.fromRGBO(156, 24, 24, 1),
-                    fontSize: 20,
                   ),
                 ),
               ),
               SizedBox(width: 10),
               Flexible(
-                child: Text(
+                child: AutoSizeText(
                   "Endereço: \n$street \n$descAdr",
+                  minFontSize: 16,
+                  maxFontSize: 20,
                   style: TextStyle(
                     color: Color.fromRGBO(156, 24, 24, 1),
-                    fontSize: 20,
                   ),
                 ),
               ),
