@@ -52,7 +52,7 @@ class _ReceptionPageState extends State<ReceptionPage> {
               
             ),
             
-            const Column(
+             Column(
               children: [
                 SizedBox(height: 75),
                 CircleAvatar(

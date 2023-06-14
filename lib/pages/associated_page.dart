@@ -1,6 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:help4paws/pages/details_page.dart';
+
+import '../widgets/associateds_widget.dart';
+
 class AssociatedPage extends StatefulWidget {
   const AssociatedPage({Key? key}) : super(key: key);
 
@@ -9,13 +12,38 @@ class AssociatedPage extends StatefulWidget {
 }
 
 class _AssociatedPageState extends State<AssociatedPage> {
+  String _selectedSortOption = 'Ordenar por mais próximos';
+
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          leading: IconButton(icon: Icon(Icons.arrow_back, color: Colors.black,), onPressed: () {Navigator.pop(context);},),
           backgroundColor: const Color.fromRGBO(226, 248, 243, 1),
+          actions: [
+            PopupMenuButton<String>(
+              color: Color.fromARGB(255, 255, 255, 255),
+            
+              itemBuilder: (context) => [
+                _buildPopupMenuItem(
+                  "Ordenar por mais próximos",
+                  Icons.gps_fixed,
+                ),
+                _buildPopupMenuItem(
+                  "Ordenar por mais recentes",
+                  Icons.arrow_circle_up,
+                ),
+                _buildPopupMenuItem(
+                  "Ordenar por mais antigos",
+                  Icons.arrow_circle_down,
+                ),
+              ],
+            ),
+          ],
         ),
+
         bottomNavigationBar: BottomAppBar(
           child: Container(
             width: double.infinity,
@@ -28,7 +56,7 @@ class _AssociatedPageState extends State<AssociatedPage> {
               ),
               color: Color.fromARGB(255, 204, 83, 131),
             ),
-            child: Center(child: Icon(Icons.business_center)),
+            child: Center(child: Icon(Icons.business_center, size: 50)),
           ),
         ),
         backgroundColor: Color.fromARGB(255, 252, 252, 252),
@@ -52,25 +80,31 @@ class _AssociatedPageState extends State<AssociatedPage> {
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     children: [
-                      buildContainerAssociated(
-                        image: 'https://s2.glbimg.com/nvjFq8VRjyrpdQqaOeywz-5DFwY=/e.glbimg.com/og/ed/f/original/2021/08/27/captura_de_tela_2021-08-27_as_11.01.15.png',
+                      AssociatedsContainer(
+                        context: context,
+                        image:
+                            'https://s2.glbimg.com/nvjFq8VRjyrpdQqaOeywz-5DFwY=/e.glbimg.com/og/ed/f/original/2021/08/27/captura_de_tela_2021-08-27_as_11.01.15.png',
                         name: 'Abrigo Serrotino',
-                        desc: 'O abrigo Serrotino foi criado em 2003 pela veterinária Josefa de Andrade e se tornou um dos primeiros parceiros do H4P, cedendo espaço e tratamento para cães, gatos, entre outros animais, resgatados por nossa equipe.',
+                        desc:
+                            'O abrigo Serrotino foi criado em 2003 pela veterinária Josefa de Andrade e se tornou um dos primeiros parceiros do H4P, cedendo espaço e tratamento para cães, gatos, entre outros animais, resgatados por nossa equipe.',
                         email: 'email@example.com',
                         number: '(00) 00000-0000',
                         street: "Rua Sem Nome",
                         descAdr: "Próximo ao Cabaré do Jão",
-                        pix: "tns6@aluno.ifal.edu.br"
+                        pix: "tns6@aluno.ifal.edu.br",
                       ),
-                      buildContainerAssociated(
-                        image: 'https://portal.fmu.br/wp-content/uploads/servicos/hospital-veterinario/servicos-hospital-veterinario2.jpg',
+                      AssociatedsContainer(
+                        context: context,
+                        image:
+                            'https://portal.fmu.br/wp-content/uploads/servicos/hospital-veterinario/servicos-hospital-veterinario2.jpg',
                         name: 'B&C Company',
-                        desc: ' A B&C Company se tornou nossa parceira em 2018, fazendo doações de materiais, remédios e até mesmo de mantimentos necessários para ajudar os animais resgatados.',
+                        desc:
+                            'A B&C Company se tornou nossa parceira em 2018, fazendo doações de materiais, remédios e até mesmo de mantimentos necessários para ajudar os animais resgatados.',
                         email: 'email2@example.com',
                         number: '(11) 11111-0000',
                         street: "Rua Bla bla",
                         descAdr: "Não é no serrote",
-                        pix: "junioradelsonst@gmail.com"
+                        pix: "junioradelsonst@gmail.com",
                       ),
                     ],
                   ),
@@ -83,123 +117,22 @@ class _AssociatedPageState extends State<AssociatedPage> {
     );
   }
 
-  Container buildContainerAssociated({
-    required image,
-    required name,
-    required desc,
-    required email,
-    required number,
-    required street,
-    required descAdr,
-    required pix,
-  }) {
-    return Container(
-      padding: EdgeInsets.all(20),
-      margin: EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Color.fromARGB(255, 236, 236, 236),
-        borderRadius: BorderRadius.all(Radius.circular(30)),
-      ),
-      child: Container(
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CircleAvatar(
-                  backgroundImage: NetworkImage('$image'),
-                  radius: 75,
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      Center(
-                        child: AutoSizeText(
-                          "$name",
-                          minFontSize: 20,
-                          maxFontSize: 25,
-                          style: TextStyle(
-                            color: Color.fromRGBO(19, 42, 68, 1),
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      AutoSizeText(
-                        "$desc",
-                        minFontSize: 16,
-                        maxFontSize: 20,
-                        style: TextStyle(
-                          color: Color.fromRGBO(19, 42, 68, 1),
-                          overflow: TextOverflow.clip,
-                        ),
-                        textDirection: TextDirection.rtl,
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-            Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(
-                child: AutoSizeText(
-                  "Contato: \n$email \n$number",
-                  minFontSize: 16,
-                  maxFontSize: 20,
-                  style: TextStyle(
-                    color: Color.fromRGBO(156, 24, 24, 1),
-                  ),
-                ),
-              ),
-              SizedBox(width: 10),
-              Flexible(
-                child: AutoSizeText(
-                  "Endereço: \n$street \n$descAdr",
-                  minFontSize: 16,
-                  maxFontSize: 20,
-                  style: TextStyle(
-                    color: Color.fromRGBO(156, 24, 24, 1),
-                  ),
-                ),
-              ),
-            ],
+  PopupMenuItem<String> _buildPopupMenuItem(String title, IconData iconData) {
+  return PopupMenuItem<String>(
+    value: title,
+    child: Container(
+      color: Colors.white,
+      child: Row(
+        children: [
+          Icon(
+            iconData,
+            color: Colors.black,
           ),
-            SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => DetailsPage(
-                  image: image,
-                  name: name,
-                  desc: desc,
-                  email: email,
-                  number: number,
-                  street: street,
-                  descAdr: descAdr,
-                  pix: pix,
-                )));
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 40),
-                child: Text(
-                  "Saiba Mais",
-                  style: TextStyle(
-                    fontSize: 35,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromRGBO(19, 42, 68, 1),
-                  ),
-                ),
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-              ),
-            )
-          ],
-        ),
+          SizedBox(width: 8),
+          Text(title),
+        ],
       ),
-    );
-  }
+    ),
+  );
+}
 }

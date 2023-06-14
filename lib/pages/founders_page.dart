@@ -54,7 +54,7 @@ class _FoundersPageState extends State<FoundersPage> {
       leading: IconButton(
         icon: Icon(
           Icons.arrow_back,
-          color: Colors.white,
+          color: Colors.black,
         ),
         onPressed: () {
           Navigator.pop(context);

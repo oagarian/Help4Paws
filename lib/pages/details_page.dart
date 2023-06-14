@@ -22,7 +22,16 @@ class _DetailsPageState extends State<DetailsPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color.fromRGBO(226, 248, 243, 1),
+          backgroundColor: Color.fromRGBO(226, 248, 243, 1),
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
         ),
         bottomNavigationBar: BottomAppBar(
           child: Container(
@@ -36,7 +45,7 @@ class _DetailsPageState extends State<DetailsPage> {
               ),
               color: Color.fromARGB(255, 204, 83, 131),
             ),
-            child: Center(child: Icon(Icons.business_center)),
+            child: Center(child: Icon(Icons.business_center, size: 50)),
           ),
         ),
         backgroundColor: Color.fromARGB(255, 252, 252, 252),
@@ -67,10 +76,8 @@ class _DetailsPageState extends State<DetailsPage> {
   }) {
     return Container(
       margin: EdgeInsets.all(20),
-      height: MediaQuery.of(context).size.height - kToolbarHeight - 70,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           CircleAvatar(backgroundImage: NetworkImage('$image'), radius: 100,),
           SizedBox(height: 15),
@@ -85,7 +92,7 @@ class _DetailsPageState extends State<DetailsPage> {
           ),
           AutoSizeText(
             '$desc',
-            minFontSize: 20,
+            minFontSize: 14,
             maxFontSize: 26,
             textAlign: TextAlign.justify,
             style: TextStyle(
@@ -99,7 +106,7 @@ class _DetailsPageState extends State<DetailsPage> {
               Flexible(
                 child: AutoSizeText(
                   "Contato: \n$email \n$number",
-                  minFontSize: 16,
+                  minFontSize: 12,
                   maxFontSize: 20,
                   style: TextStyle(
                     color: Color.fromRGBO(156, 24, 24, 1),
@@ -110,7 +117,7 @@ class _DetailsPageState extends State<DetailsPage> {
               Flexible(
                 child: AutoSizeText(
                   "Endereço: \n$street \n$descAdr",
-                  minFontSize: 16,
+                  minFontSize: 12,
                   maxFontSize: 20,
                   style: TextStyle(
                     color: Color.fromRGBO(156, 24, 24, 1),
@@ -119,50 +126,58 @@ class _DetailsPageState extends State<DetailsPage> {
               ),
             ],
           ),
-          ElevatedButton(
-            onPressed: () {},
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 50),
-              child: Text(
-                "Contato",
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromRGBO(19, 42, 68, 1),
+          SizedBox(height: 20),
+          Flexible(
+            child: ElevatedButton(
+              onPressed: () {},
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 50),
+                child: AutoSizeText(
+                  "Contato",
+                  maxFontSize: 30,
+                  minFontSize: 24,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromRGBO(19, 42, 68, 1),
+                  ),
                 ),
               ),
-            ),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Color.fromARGB(255, 221, 221, 221),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color.fromARGB(255, 221, 221, 221),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
               ),
             ),
           ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => DonationPage(
-                  pix: widget.pix,
-                  sended: true,
-                  cidade: widget.descAdr,
-
-                )));
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 70),
-              child: Text(
-                "Doar",
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromRGBO(19, 42, 68, 1),
+          Flexible(child: SizedBox(height: 20,)),
+          Flexible(
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => DonationPage(
+                    pix: widget.pix,
+                    sended: true,
+                    cidade: widget.descAdr,
+          
+                  )));
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 70),
+                child: AutoSizeText(
+                  "Doar",
+                  maxFontSize: 30,
+                  minFontSize: 24,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromRGBO(19, 42, 68, 1),
+                  ),
                 ),
               ),
-            ),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color.fromARGB(255, 221, 221, 221),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(255, 221, 221, 221),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
               ),
             ),
           )
