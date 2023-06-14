@@ -59,7 +59,8 @@ class _AssociatedPageState extends State<AssociatedPage> {
                         email: 'email@example.com',
                         number: '(00) 00000-0000',
                         street: "Rua Sem Nome",
-                        descAdr: "Próximo ao Cabaré do Jão"
+                        descAdr: "Próximo ao Cabaré do Jão",
+                        pix: "tns6@aluno.ifal.edu.br"
                       ),
                       buildContainerAssociated(
                         image: 'https://portal.fmu.br/wp-content/uploads/servicos/hospital-veterinario/servicos-hospital-veterinario2.jpg',
@@ -68,7 +69,8 @@ class _AssociatedPageState extends State<AssociatedPage> {
                         email: 'email2@example.com',
                         number: '(11) 11111-0000',
                         street: "Rua Bla bla",
-                        descAdr: "Não é no serrote"
+                        descAdr: "Não é no serrote",
+                        pix: "junioradelsonst@gmail.com"
                       ),
                     ],
                   ),
@@ -89,7 +91,7 @@ class _AssociatedPageState extends State<AssociatedPage> {
     required number,
     required street,
     required descAdr,
-
+    required pix,
   }) {
     return Container(
       padding: EdgeInsets.all(20),
@@ -174,7 +176,7 @@ class _AssociatedPageState extends State<AssociatedPage> {
                   number: number,
                   street: street,
                   descAdr: descAdr,
-
+                  pix: pix,
                 )));
               },
               child: Padding(

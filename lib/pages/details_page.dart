@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:help4paws/pages/donations_page.dart';
 class DetailsPage extends StatefulWidget {
   final String image;
   final String name;
@@ -8,7 +9,8 @@ class DetailsPage extends StatefulWidget {
   final String number;
   final String street;
   final String descAdr;
-  const DetailsPage({Key? key, required this.image, required this.name, required this.desc, required this.email, required this.number, required this.street, required this.descAdr}) : super(key: key);
+  final String pix;
+  const DetailsPage({Key? key, required this.image, required this.name, required this.desc, required this.email, required this.number, required this.street, required this.descAdr, required this.pix}) : super(key: key);
 
   @override
   State<DetailsPage> createState() => _DetailsPageState();
@@ -138,7 +140,14 @@ class _DetailsPageState extends State<DetailsPage> {
             ),
           ),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => DonationPage(
+                  pix: widget.pix,
+                  sended: true,
+                  cidade: widget.descAdr,
+
+                )));
+            },
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 70),
               child: Text(
