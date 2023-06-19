@@ -136,20 +136,7 @@ class _DonationPageState extends State<DonationPage> {
                         content: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            FutureBuilder<String>(
-                              future: _setData(
-                                name: name,
-                                value: value,
-                                pix: pix,
-                                cidade: cidade,
-                              ),
-                              builder: (context, snapshot) {
-                                 if (snapshot.hasData) {
-                                  return Image.network("https://gerarqrcodepix.com.br/api/v1?nome=$name&cidade=$cidade&saida=qr&chave=$pix&valor=$value");
-                                 }
-                                return CircularProgressIndicator();
-                              },
-                            ),
+                            Image.network("https://gerarqrcodepix.com.br/api/v1?nome=$name&cidade=$cidade&saida=qr&chave=$pix&valor=$value"),
                             ElevatedButton(
                               onPressed: () async {
                                 String brcode = await _setData(

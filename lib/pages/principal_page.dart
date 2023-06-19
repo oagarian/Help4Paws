@@ -132,7 +132,7 @@ class _PrincipalPageState extends State<PrincipalPage> {
                         '\n\n O Help4Paws é um aplicativo inovador dedicado a resgatar animais de rua e proporcionar-lhes uma vida digna. Com um simples toque na tela, você pode reportar animais em situação de vulnerabilidade, permitindo que nossa equipe de resgate entre em ação imediatamente. Nossa rede de voluntários comprometidos e abrigos parceiros trabalha incansavelmente para resgatar, fornecer cuidados médicos e encontrar lares amorosos para esses animais. Junte-se a nós e faça a diferença na vida dos animais, tornando-se parte dessa causa nobre.',
                         textAlign: TextAlign.center,
                         minFontSize: 16,
-                        maxFontSize: 20,
+                        maxFontSize: 60,
                         style: TextStyle(
                           fontFamily: 'Quicksand',
                           color: Color.fromRGBO(247, 247, 247, 1),
