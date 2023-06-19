@@ -9,12 +9,6 @@ class PrincipalPage extends StatefulWidget {
 }
 
 class _PrincipalPageState extends State<PrincipalPage> {
-  bool isWhite = true;
-  void turnIcon() {
-      setState(() {
-        isWhite = !isWhite;
-      });
-    }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -89,14 +83,6 @@ class _PrincipalPageState extends State<PrincipalPage> {
         backgroundColor: const Color.fromRGBO(247, 247, 247, 1),
         appBar: AppBar(
           backgroundColor: const Color.fromRGBO(226, 248, 243, 1),
-          actions: [IconButton(
-              icon: Icon(isWhite ? Icons.wb_sunny : Icons.nightlight_round),
-              color: isWhite ? Colors.yellow : Color.fromARGB(255, 185, 185, 185),
-              onPressed: () {
-                turnIcon();
-              },
-            ),
-          ]
         ),
         
         body: Column(
