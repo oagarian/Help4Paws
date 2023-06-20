@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:help4paws/pages/associated_page.dart';
+import 'package:help4paws/pages/cases_page.dart';
 import 'package:help4paws/pages/details_page.dart';
 import 'package:help4paws/pages/founders_page.dart';
 import 'package:help4paws/pages/reception_page.dart';
@@ -22,6 +23,8 @@ class MyApp extends StatelessWidget {
         '/principal': (context) => const PrincipalPage(),
         '/founders': (context) => const FoundersPage(),
         '/associateds': (context) => const AssociatedPage(),
+        '/cases': (context) => const CasePage(),
+
 
       }
     );
