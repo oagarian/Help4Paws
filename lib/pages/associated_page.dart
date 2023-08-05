@@ -1,8 +1,8 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:help4paws/pages/details_page.dart';
-
-import '../widgets/associateds_widget.dart';
+import 'package:help4paws/widgets/associated_model.dart';
+import 'package:help4paws/widgets/associateds_widget.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class AssociatedPage extends StatefulWidget {
   const AssociatedPage({Key? key}) : super(key: key);
@@ -13,19 +13,49 @@ class AssociatedPage extends StatefulWidget {
 
 class _AssociatedPageState extends State<AssociatedPage> {
   String _selectedSortOption = 'Ordenar por mais próximos';
+  List<AssociatedModel> associatedList = [];
 
+  @override
+  void initState() {
+    super.initState();
+    _fetchData();
+  }
+
+  Future<void> _fetchData() async {
+    var url = Uri.parse("https://8080-oagarian-apihelp4paws-4nwx48pw66j.ws-us102.gitpod.io/user/get?amount=3");
+    try {
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        List<AssociatedModel> associatedListData = data
+            .map((item) => AssociatedModel.fromJson(item as Map<String, dynamic>))
+            .toList();
+        setState(() {
+          associatedList = associatedListData;
+        });
+      } else {
+        print("Failed to fetch data. Status Code: ${response.statusCode}");
+      }
+    } catch (e) {
+      print("Error: $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          leading: IconButton(icon: Icon(Icons.arrow_back, color: Colors.black,), onPressed: () {Navigator.pop(context);},),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
           backgroundColor: const Color.fromRGBO(226, 248, 243, 1),
           actions: [
             PopupMenuButton<String>(
               color: Color.fromARGB(255, 255, 255, 255),
-            
               itemBuilder: (context) => [
                 _buildPopupMenuItem(
                   "Ordenar por mais próximos",
@@ -43,7 +73,6 @@ class _AssociatedPageState extends State<AssociatedPage> {
             ),
           ],
         ),
-
         bottomNavigationBar: BottomAppBar(
           child: Container(
             width: double.infinity,
@@ -76,37 +105,24 @@ class _AssociatedPageState extends State<AssociatedPage> {
               ),
               Expanded(
                 child: SingleChildScrollView(
-                  child: ListView(
+                  child: ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    children: [
-                      AssociatedsContainer(
+                    itemCount: associatedList.length,
+                    itemBuilder: (context, index) {
+                      final associated = associatedList[index];
+                      return AssociatedsContainer(
                         context: context,
-                        image:
-                            'https://s2.glbimg.com/nvjFq8VRjyrpdQqaOeywz-5DFwY=/e.glbimg.com/og/ed/f/original/2021/08/27/captura_de_tela_2021-08-27_as_11.01.15.png',
-                        name: 'Abrigo Serrotino',
-                        desc:
-                            'O abrigo Serrotino foi criado em 2003 pela veterinária Josefa de Andrade e se tornou um dos primeiros parceiros do H4P, cedendo espaço e tratamento para cães, gatos, entre outros animais, resgatados por nossa equipe.',
-                        email: 'email@example.com',
-                        number: '(00) 00000-0000',
-                        street: "Rua Sem Nome",
-                        descAdr: "Próximo ao Cabaré do Jão",
-                        pix: "tns6@aluno.ifal.edu.br",
-                      ),
-                      AssociatedsContainer(
-                        context: context,
-                        image:
-                            'https://portal.fmu.br/wp-content/uploads/servicos/hospital-veterinario/servicos-hospital-veterinario2.jpg',
-                        name: 'B&C Company',
-                        desc:
-                            'A B&C Company se tornou nossa parceira em 2018, fazendo doações de materiais, remédios e até mesmo de mantimentos necessários para ajudar os animais resgatados.',
-                        email: 'email2@example.com',
-                        number: '(11) 11111-0000',
-                        street: "Rua Bla bla",
-                        descAdr: "Não é no serrote",
-                        pix: "junioradelsonst@gmail.com",
-                      ),
-                    ],
+                        image: associated.logoImage,
+                        name: associated.name,
+                        desc: associated.description,
+                        email: associated.email,
+                        number: associated.contactNumber,
+                        street: associated.street,
+                        descAdr: associated.descriptionAddr,
+                        pix: associated.pix,
+                      );
+                    },
                   ),
                 ),
               ),
@@ -118,21 +134,21 @@ class _AssociatedPageState extends State<AssociatedPage> {
   }
 
   PopupMenuItem<String> _buildPopupMenuItem(String title, IconData iconData) {
-  return PopupMenuItem<String>(
-    value: title,
-    child: Container(
-      color: Colors.white,
-      child: Row(
-        children: [
-          Icon(
-            iconData,
-            color: Colors.black,
-          ),
-          SizedBox(width: 8),
-          Text(title),
-        ],
+    return PopupMenuItem<String>(
+      value: title,
+      child: Container(
+        color: Colors.white,
+        child: Row(
+          children: [
+            Icon(
+              iconData,
+              color: Colors.black,
+            ),
+            SizedBox(width: 8),
+            Text(title),
+          ],
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 }
