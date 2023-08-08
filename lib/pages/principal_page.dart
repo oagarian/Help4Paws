@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:help4paws/widgets/principal_widget.dart';
 
 class PrincipalPage extends StatefulWidget {
   const PrincipalPage({Key? key}) : super(key: key);
@@ -108,14 +109,14 @@ class _PrincipalPageState extends State<PrincipalPage> {
               child: Card(
                 color: Color.fromRGBO(205, 80, 133, 1),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(30),
                 ),
-                margin: EdgeInsets.all(15),
+                margin: EdgeInsets.all(20),
                 elevation: 6,
                 child: Container(
-                  height: 500,
+                  height: 350,
                   child: Padding(
-                    padding: EdgeInsets.all(16.0),
+                    padding: EdgeInsets.all(20),
                     child: ListTile(
                       title: Padding(
                         padding: EdgeInsets.fromLTRB(0, 2, 0, 2),
@@ -123,6 +124,7 @@ class _PrincipalPageState extends State<PrincipalPage> {
                           'Bem-vindo(a)!',
                           textAlign: TextAlign.center,
                           style: TextStyle(
+                            fontWeight: FontWeight.bold,
                             fontSize: 22,
                             color: Color.fromRGBO(247, 247, 247, 1),
                             fontFamily: 'Quicksand',
@@ -144,6 +146,7 @@ class _PrincipalPageState extends State<PrincipalPage> {
                 ),
               ),
             ),
+            PrincipalContainer(context: context, titulo: " ÚLTIMAS NOTÍCIAS", data: "08 de agosto de 2023", tituloNoticia: "Cavalo deu o rabo na esquina, disse Loki", descricao: "Foi isso mesmo, disse thiago"),
           ],
         ),
       ),
