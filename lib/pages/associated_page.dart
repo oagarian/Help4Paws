@@ -18,7 +18,6 @@ class _AssociatedPageState extends State<AssociatedPage> {
   @override
   void initState() {
     super.initState();
-    _fetchData();
   }
 
   Future<void> _fetchData() async {

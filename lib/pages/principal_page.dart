@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:help4paws/services/api_service.dart';
 
 class PrincipalPage extends StatefulWidget {
   const PrincipalPage({Key? key}) : super(key: key);
@@ -42,7 +43,9 @@ class _PrincipalPageState extends State<PrincipalPage> {
                           ),
                           onPressed: () {
                             print("pa");
-                            Navigator.pushNamed(context, '/associateds');
+                            ApiService service = new ApiService();
+                            Future data = service.getData();
+                            print(data);
                           },
                         ),
                         IconButton(
