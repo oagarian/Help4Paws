@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:help4paws/services/associateds_DAO.dart';
+import 'package:help4paws/services/database_connect.dart';
 import 'package:help4paws/widgets/associated_model.dart';
 import 'package:help4paws/widgets/associateds_widget.dart';
 import 'dart:convert';
@@ -18,27 +20,17 @@ class _AssociatedPageState extends State<AssociatedPage> {
   @override
   void initState() {
     super.initState();
-    _fetchData();
+    _loadAssociateds();
   }
 
-  Future<void> _fetchData() async {
-    var url = Uri.parse("https://8080-oagarian-apihelp4paws-4nwx48pw66j.ws-us102.gitpod.io/user/get?amount=3");
-    try {
-      final response = await http.get(url);
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        List<AssociatedModel> associatedListData = data
-            .map((item) => AssociatedModel.fromJson(item as Map<String, dynamic>))
-            .toList();
-        setState(() {
-          associatedList = associatedListData;
-        });
-      } else {
-        print("Failed to fetch data. Status Code: ${response.statusCode}");
-      }
-    } catch (e) {
-      print("Error: $e");
-    }
+  Future<void> _loadAssociateds() async {
+    final connection = await DatabaseConnect.connect();
+    final dao = AssociatedsDAO(connection);
+    final results = await dao.getAssociateds(10); // Adjust the limit as needed
+
+    setState(() {
+      associatedList = results.cast<AssociatedModel>();
+    });
   }
 
   @override
