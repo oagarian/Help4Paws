@@ -3,8 +3,6 @@ import 'package:help4paws/services/associateds_DAO.dart';
 import 'package:help4paws/services/database_connect.dart';
 import 'package:help4paws/widgets/associated_model.dart';
 import 'package:help4paws/widgets/associateds_widget.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 
 class AssociatedPage extends StatefulWidget {
   const AssociatedPage({Key? key}) : super(key: key);
@@ -16,6 +14,7 @@ class AssociatedPage extends StatefulWidget {
 class _AssociatedPageState extends State<AssociatedPage> {
   String _selectedSortOption = 'Ordenar por mais próximos';
   List<AssociatedModel> associatedList = [];
+  bool isLoading = true; 
 
   @override
   void initState() {
@@ -24,14 +23,24 @@ class _AssociatedPageState extends State<AssociatedPage> {
   }
 
   Future<void> _loadAssociateds() async {
+  try {
     final connection = await DatabaseConnect.connect();
     final dao = AssociatedsDAO(connection);
-    final results = await dao.getAssociateds(10); // Adjust the limit as needed
+    final results = await dao.getAssociateds(10); 
 
     setState(() {
       associatedList = results.cast<AssociatedModel>();
+      isLoading = false; 
+    });
+  } catch (error) {
+    print('Erro ao carregar os dados: $error');
+    
+    setState(() {
+      isLoading = false; 
     });
   }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -95,29 +104,31 @@ class _AssociatedPageState extends State<AssociatedPage> {
                   color: Color.fromRGBO(19, 42, 68, 1),
                 ),
               ),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: associatedList.length,
-                    itemBuilder: (context, index) {
-                      final associated = associatedList[index];
-                      return AssociatedsContainer(
-                        context: context,
-                        image: associated.logoImage,
-                        name: associated.name,
-                        desc: associated.description,
-                        email: associated.email,
-                        number: associated.contactNumber,
-                        street: associated.street,
-                        descAdr: associated.descriptionAddr,
-                        pix: associated.pix,
-                      );
-                    },
-                  ),
-                ),
-              ),
+              isLoading
+                  ? CircularProgressIndicator()
+                  : Expanded(
+                      child: SingleChildScrollView(
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: associatedList.length,
+                          itemBuilder: (context, index) {
+                            final associated = associatedList[index];
+                            return AssociatedsContainer(
+                              context: context,
+                              image: associated.logoImage,
+                              name: associated.name,
+                              desc: associated.description,
+                              email: associated.email,
+                              number: associated.contactNumber,
+                              street: associated.street,
+                              descAdr: associated.descriptionAddr,
+                              pix: associated.pix,
+                            );
+                          },
+                        ),
+                      ),
+                    ),
             ],
           ),
         ),
