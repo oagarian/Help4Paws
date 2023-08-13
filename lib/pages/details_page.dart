@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:help4paws/pages/donations_page.dart';
+
 class DetailsPage extends StatefulWidget {
   final String image;
   final String name;
@@ -10,7 +11,17 @@ class DetailsPage extends StatefulWidget {
   final String street;
   final String descAdr;
   final String pix;
-  const DetailsPage({Key? key, required this.image, required this.name, required this.desc, required this.email, required this.number, required this.street, required this.descAdr, required this.pix}) : super(key: key);
+  const DetailsPage(
+      {Key? key,
+      required this.image,
+      required this.name,
+      required this.desc,
+      required this.email,
+      required this.number,
+      required this.street,
+      required this.descAdr,
+      required this.pix})
+      : super(key: key);
 
   @override
   State<DetailsPage> createState() => _DetailsPageState();
@@ -79,7 +90,10 @@ class _DetailsPageState extends State<DetailsPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          CircleAvatar(backgroundImage: NetworkImage('$image'), radius: 100,),
+          CircleAvatar(
+            backgroundImage: NetworkImage('$image'),
+            radius: 100,
+          ),
           SizedBox(height: 15),
           Text(
             '$name\n',
@@ -131,7 +145,8 @@ class _DetailsPageState extends State<DetailsPage> {
             child: ElevatedButton(
               onPressed: () {},
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 50),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 5, horizontal: 50),
                 child: AutoSizeText(
                   "Contato",
                   maxFontSize: 30,
@@ -150,19 +165,25 @@ class _DetailsPageState extends State<DetailsPage> {
               ),
             ),
           ),
-          Flexible(child: SizedBox(height: 20,)),
+          Flexible(
+              child: SizedBox(
+            height: 20,
+          )),
           Flexible(
             child: ElevatedButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => DonationPage(
-                    pix: widget.pix,
-                    sended: true,
-                    cidade: widget.descAdr,
-          
-                  )));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => DonationPage(
+                              pix: widget.pix,
+                              sended: true,
+                              cidade: widget.descAdr,
+                            )));
               },
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 70),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 5, horizontal: 70),
                 child: AutoSizeText(
                   "Doar",
                   maxFontSize: 30,

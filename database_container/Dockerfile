@@ -1,7 +1,5 @@
-FROM postgres
+# Use the official PostgreSQL image from Docker Hub
+FROM postgres:latest
 
-WORKDIR /database
-
-COPY ./database/schema.sql /docker-entrypoint-initdb.d
-
-USER root
+# Copy the init.sql script to the appropriate directory
+COPY init.sql /docker-entrypoint-initdb.d/

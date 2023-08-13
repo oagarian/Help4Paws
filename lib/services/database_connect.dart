@@ -3,11 +3,11 @@ import 'package:postgres/postgres.dart';
 class DatabaseConnect {
   static Future<PostgreSQLConnection> connect() async {
     final connection = PostgreSQLConnection(
-      'localhost', 
+      'localhost',
       5432,
-      'help4paws', 
-      username: 'root', 
-      password: 'password', 
+      'help4paws',
+      username: 'root',
+      password: 'password',
     );
 
     await connection.open();

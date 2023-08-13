@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:help4paws/services/associateds_DAO.dart';
 import 'package:help4paws/services/database_connect.dart';
-import 'package:help4paws/widgets/associated_model.dart';
 import 'package:help4paws/widgets/associateds_widget.dart';
 
 class AssociatedPage extends StatefulWidget {
@@ -13,34 +12,35 @@ class AssociatedPage extends StatefulWidget {
 
 class _AssociatedPageState extends State<AssociatedPage> {
   String _selectedSortOption = 'Ordenar por mais próximos';
-  List<AssociatedModel> associatedList = [];
-  bool isLoading = true; 
+  List<dynamic> associatedsList = [];
+  bool isLoading = true;
+  int limit = 5;
+  int counter = 0;
 
   @override
   void initState() {
     super.initState();
-    _loadAssociateds();
+    _loadAssociateds(5);
   }
 
-  Future<void> _loadAssociateds() async {
-  try {
-    final connection = await DatabaseConnect.connect();
-    final dao = AssociatedsDAO(connection);
-    final results = await dao.getAssociateds(10); 
-
-    setState(() {
-      associatedList = results.cast<AssociatedModel>();
-      isLoading = false; 
-    });
-  } catch (error) {
-    print('Erro ao carregar os dados: $error');
-    
-    setState(() {
-      isLoading = false; 
-    });
+  Future<void> _loadAssociateds(int limit) async {
+    try {
+      final connection = await DatabaseConnect.connect();
+      final dao = AssociatedsDAO(connection);
+      final results = await dao.getAssociateds(limit);
+      final count = await dao.getAssociatedsCount();
+      setState(() {
+        associatedsList = results;
+        isLoading = false;
+        counter = count;
+      });
+    } catch (error) {
+      print('Erro ao carregar os dados: $error');
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
-}
-
 
   @override
   Widget build(BuildContext context) {
@@ -79,57 +79,63 @@ class _AssociatedPageState extends State<AssociatedPage> {
             width: double.infinity,
             height: 70,
             alignment: Alignment.topCenter,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10),
                 topRight: Radius.circular(10),
               ),
               color: Color.fromARGB(255, 204, 83, 131),
             ),
-            child: Center(child: Icon(Icons.business_center, size: 50)),
+            child: const Center(child: Icon(Icons.business_center, size: 50)),
           ),
         ),
         backgroundColor: Color.fromARGB(255, 252, 252, 252),
         body: Hero(
           tag: 'transitionToMainPage',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(height: 10),
-              Text(
-                'CONHEÇA UM POUCO DE NOSSA REDE \nDE VOLUNTÁRIOS E PARCEIROS\n',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontFamily: 'Cardo',
-                  color: Color.fromRGBO(19, 42, 68, 1),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(height: 10),
+                const Text(
+                  'CONHEÇA UM POUCO DE NOSSA REDE \nDE VOLUNTÁRIOS E PARCEIROS\n',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontFamily: 'Cardo',
+                    color: Color.fromRGBO(19, 42, 68, 1),
+                  ),
                 ),
-              ),
-              isLoading
-                  ? CircularProgressIndicator()
-                  : Expanded(
-                      child: SingleChildScrollView(
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: associatedList.length,
-                          itemBuilder: (context, index) {
-                            final associated = associatedList[index];
-                            return AssociatedsContainer(
-                              context: context,
-                              image: associated.logoImage,
-                              name: associated.name,
-                              desc: associated.description,
-                              email: associated.email,
-                              number: associated.contactNumber,
-                              street: associated.street,
-                              descAdr: associated.descriptionAddr,
-                              pix: associated.pix,
-                            );
-                          },
-                        ),
+                isLoading
+                    ? CircularProgressIndicator()
+                    : Column(
+                        children: associatedsList.map((associated) {
+                          return AssociatedsContainer(
+                            context: context,
+                            name: associated[0],
+                            image: associated[1],
+                            desc: associated[2],
+                            email: associated[3],
+                            number: associated[4],
+                            pix: associated[5],
+                            street: associated[6],
+                            descAdr: associated[7],
+                          );
+                        }).toList(),
                       ),
-                    ),
-            ],
+                if (limit < counter)
+                  IconButton(
+                    icon: Icon(Icons.keyboard_arrow_down_outlined),
+                    onPressed: () {
+                      limit += 5;
+                      if (limit <= counter) {
+                        _loadAssociateds(limit);
+                      } else {
+                        _loadAssociateds(counter);
+                      }
+                    },
+                  ),
+              ],
+            ),
           ),
         ),
       ),

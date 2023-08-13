@@ -1,23 +1,13 @@
-version: '3.0'
+version: '3.7'
 services:
-
-  database:
-    image: help4paws
-    container_name: help4paws
-    environment: 
-      POSTGRES_HOST: localhost
+  postgres:
+    image: postgres:latest
+    container_name: postgres-container
+    environment:
+      POSTGRES_DB: help4paws
       POSTGRES_USER: root
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: help4paws
-    ports: 
-      - 5432:5432
-
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin
-    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: root
     ports:
-      - "5050:80"  
+      - "5432:5432"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
