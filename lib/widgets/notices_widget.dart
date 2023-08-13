@@ -23,7 +23,7 @@ class NoticesContainer extends StatelessWidget {
         margin: const EdgeInsets.all(20),
         decoration: const BoxDecoration(
           color: Color.fromRGBO(255, 201, 203, 1),
-          borderRadius: BorderRadius.all(Radius.circular(30)),
+          borderRadius: BorderRadius.all(Radius.circular(15)),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,6 +50,7 @@ class NoticesContainer extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                         color: Color.fromRGBO(19, 42, 68, 1)),
                   ),
+                  const SizedBox(height: 10),
                   Row(
                     children: [
                       Text(
@@ -60,6 +61,8 @@ class NoticesContainer extends StatelessWidget {
                             fontStyle: FontStyle.italic,
                             color: Color.fromRGBO(38, 75, 117, 1)),
                       ),
+                      const SizedBox(width: 10),
+                      const Text(" - "),
                       const SizedBox(width: 10),
                       Text(
                         fonte,
