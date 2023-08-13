@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:help4paws/pages/associated_page.dart';
-import 'package:help4paws/pages/details_page.dart';
 import 'package:help4paws/pages/donations_page.dart';
 import 'package:help4paws/pages/founders_page.dart';
 import 'package:help4paws/pages/reception_page.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:help4paws/services/associateds_DAO.dart';
+import 'package:help4paws/services/associateds_dao.dart';
 import 'package:help4paws/services/database_connect.dart';
 import 'package:help4paws/widgets/associateds_widget.dart';
 
@@ -11,11 +11,11 @@ class AssociatedPage extends StatefulWidget {
 }
 
 class _AssociatedPageState extends State<AssociatedPage> {
-  String _selectedSortOption = 'Ordenar por mais próximos';
   List<dynamic> associatedsList = [];
   bool isLoading = true;
   int limit = 5;
   int counter = 0;
+  bool isAppBarVisible = true;
 
   @override
   void initState() {
@@ -35,7 +35,6 @@ class _AssociatedPageState extends State<AssociatedPage> {
         counter = count;
       });
     } catch (error) {
-      print('Erro ao carregar os dados: $error');
       setState(() {
         isLoading = false;
       });
@@ -46,100 +45,122 @@ class _AssociatedPageState extends State<AssociatedPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          backgroundColor: const Color.fromRGBO(226, 248, 243, 1),
-          actions: [
-            PopupMenuButton<String>(
-              color: Color.fromARGB(255, 255, 255, 255),
-              itemBuilder: (context) => [
-                _buildPopupMenuItem(
-                  "Ordenar por mais próximos",
-                  Icons.gps_fixed,
+        appBar: isAppBarVisible
+            ? AppBar(
+                leading: IconButton(
+                  icon: const Icon(Icons.arrow_back, color: Colors.black),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
-                _buildPopupMenuItem(
-                  "Ordenar por mais recentes",
-                  Icons.arrow_circle_up,
-                ),
-                _buildPopupMenuItem(
-                  "Ordenar por mais antigos",
-                  Icons.arrow_circle_down,
-                ),
-              ],
-            ),
-          ],
-        ),
+                backgroundColor: const Color.fromRGBO(226, 248, 243, 1),
+                actions: [
+                  PopupMenuButton<String>(
+                    color: const Color.fromARGB(255, 255, 255, 255),
+                    itemBuilder: (context) => [
+                      _buildPopupMenuItem(
+                        "Ordenar por mais próximos",
+                        Icons.gps_fixed,
+                      ),
+                      _buildPopupMenuItem(
+                        "Ordenar por mais recentes",
+                        Icons.arrow_circle_up,
+                      ),
+                      _buildPopupMenuItem(
+                        "Ordenar por mais antigos",
+                        Icons.arrow_circle_down,
+                      ),
+                    ],
+                  ),
+                ],
+              )
+            : null,
         bottomNavigationBar: BottomAppBar(
-          child: Container(
-            width: double.infinity,
-            height: 70,
-            alignment: Alignment.topCenter,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10),
-              ),
-              color: Color.fromARGB(255, 204, 83, 131),
-            ),
-            child: const Center(child: Icon(Icons.business_center, size: 50)),
-          ),
+          child: bottomBarBuild()
         ),
-        backgroundColor: Color.fromARGB(255, 252, 252, 252),
+        backgroundColor: const Color.fromARGB(255, 252, 252, 252),
         body: Hero(
           tag: 'transitionToMainPage',
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const SizedBox(height: 10),
-                const Text(
-                  'CONHEÇA UM POUCO DE NOSSA REDE \nDE VOLUNTÁRIOS E PARCEIROS\n',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontFamily: 'Cardo',
-                    color: Color.fromRGBO(19, 42, 68, 1),
+          child: NotificationListener<ScrollNotification>(
+            onNotification: (scrollNotification) {
+              if (scrollNotification is ScrollUpdateNotification) {
+                setState(() {
+                  isAppBarVisible = scrollNotification.scrollDelta! < 0;
+                });
+              }
+              return false;
+            },
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 10),
+                  const Text(
+                    'CONHEÇA UM POUCO DE NOSSA REDE \nDE VOLUNTÁRIOS E PARCEIROS\n',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontFamily: 'Cardo',
+                      color: Color.fromRGBO(19, 42, 68, 1),
+                    ),
                   ),
-                ),
-                isLoading
-                    ? CircularProgressIndicator()
-                    : Column(
-                        children: associatedsList.map((associated) {
-                          return AssociatedsContainer(
-                            context: context,
-                            name: associated[0],
-                            image: associated[1],
-                            desc: associated[2],
-                            email: associated[3],
-                            number: associated[4],
-                            pix: associated[5],
-                            street: associated[6],
-                            descAdr: associated[7],
-                          );
-                        }).toList(),
-                      ),
-                if (limit < counter)
-                  IconButton(
-                    icon: Icon(Icons.keyboard_arrow_down_outlined),
-                    onPressed: () {
-                      limit += 5;
-                      if (limit <= counter) {
-                        _loadAssociateds(limit);
-                      } else {
-                        _loadAssociateds(counter);
-                      }
-                    },
-                  ),
-              ],
+                  isLoading
+                      ? const CircularProgressIndicator()
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: associatedsList.length,
+                          itemBuilder: (context, index) {
+                            return AssociatedsContainer(
+                              context: context,
+                              name: associatedsList[index][0],
+                              image: associatedsList[index][1],
+                              desc: associatedsList[index][2],
+                              email: associatedsList[index][3],
+                              number: associatedsList[index][4],
+                              pix: associatedsList[index][5],
+                              street: associatedsList[index][6],
+                              descAdr: associatedsList[index][7],
+                            );
+                          },
+                        ),
+                  if (limit < counter)
+                    IconButton(
+                      icon: const Icon(Icons.keyboard_arrow_down_outlined),
+                      onPressed: () {
+                        limit += 5;
+                        if (limit <= counter) {
+                          _loadAssociateds(limit);
+                        } else {
+                          _loadAssociateds(counter);
+                        }
+                      },
+                    ),
+                ],
+              ),
             ),
           ),
         ),
       ),
     );
+  }
+
+
+
+
+  Container bottomBarBuild() {
+    return Container(
+          width: double.infinity,
+          height: 70,
+          alignment: Alignment.topCenter,
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+            ),
+            color: Color.fromARGB(255, 204, 83, 131),
+          ),
+          child: const Center(child: Icon(Icons.business_center, size: 50)),
+        );
   }
 
   PopupMenuItem<String> _buildPopupMenuItem(String title, IconData iconData) {
@@ -153,7 +174,7 @@ class _AssociatedPageState extends State<AssociatedPage> {
               iconData,
               color: Colors.black,
             ),
-            SizedBox(width: 8),
+            const SizedBox(width: 8),
             Text(title),
           ],
         ),

@@ -28,9 +28,9 @@ class AssociatedsContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(20),
-      margin: EdgeInsets.all(20),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.all(20),
+      margin: const EdgeInsets.all(20),
+      decoration: const BoxDecoration(
         color: Color.fromARGB(255, 236, 236, 236),
         borderRadius: BorderRadius.all(Radius.circular(30)),
       ),
@@ -40,7 +40,7 @@ class AssociatedsContainer extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CircleAvatar(
-                backgroundImage: NetworkImage('$image'),
+                backgroundImage: NetworkImage(image),
                 radius: 75,
               ),
               Expanded(
@@ -48,8 +48,8 @@ class AssociatedsContainer extends StatelessWidget {
                   children: [
                     Center(
                       child: Text(
-                        "$name",
-                        style: TextStyle(
+                        name,
+                        style: const TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
                           color: Color.fromRGBO(19, 42, 68, 1),
@@ -57,8 +57,8 @@ class AssociatedsContainer extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "$desc",
-                      style: TextStyle(
+                      desc,
+                      style: const TextStyle(
                         fontSize: 20,
                         color: Color.fromRGBO(19, 42, 68, 1),
                       ),
@@ -75,17 +75,17 @@ class AssociatedsContainer extends StatelessWidget {
               Flexible(
                 child: Text(
                   "Contato: \n$email \n$number",
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 20,
                     color: Color.fromRGBO(156, 24, 24, 1),
                   ),
                 ),
               ),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               Flexible(
                 child: Text(
                   "Endereço: \n$street \n$descAdr",
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 20,
                     color: Color.fromRGBO(156, 24, 24, 1),
                   ),
@@ -93,7 +93,7 @@ class AssociatedsContainer extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           ElevatedButton(
             onPressed: () {
               Navigator.push(
@@ -112,8 +112,14 @@ class AssociatedsContainer extends StatelessWidget {
                 ),
               );
             },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 40),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+            ),
+            child: const Padding(
+              padding: EdgeInsets.symmetric(vertical: 3, horizontal: 40),
               child: Text(
                 "Saiba Mais",
                 style: TextStyle(
@@ -121,12 +127,6 @@ class AssociatedsContainer extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   color: Color.fromRGBO(19, 42, 68, 1),
                 ),
-              ),
-            ),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
               ),
             ),
           ),

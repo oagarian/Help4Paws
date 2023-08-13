@@ -60,8 +60,8 @@ class _DonationPageState extends State<DonationPage> {
           padding: const EdgeInsets.all(25),
           child: Column(
             children: [
-              SizedBox(height: 40),
-              Text(
+              const SizedBox(height: 40),
+              const Text(
                 'Doação',
                 style: TextStyle(
                   fontSize: 36,
@@ -70,8 +70,8 @@ class _DonationPageState extends State<DonationPage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 'QUALQUER VALOR PODE FAZER A \n DIFERENÇA NA VIDA DE UM BICHINHO',
                 style: TextStyle(
                   fontSize: 20,
@@ -80,17 +80,17 @@ class _DonationPageState extends State<DonationPage> {
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
               TextFormField(
                 controller: nameController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Nome Completo',
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               TextFormField(
                 controller: cpfController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'CPF',
                   hintText: '000.000.000-00',
                 ),
@@ -100,24 +100,24 @@ class _DonationPageState extends State<DonationPage> {
                   LengthLimitingTextInputFormatter(11),
                 ],
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               TextFormField(
                 controller: emailController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Email',
                   hintText: 'nome@gmail.com',
                 ),
                 keyboardType: TextInputType.emailAddress,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               TextFormField(
                 controller: valueController,
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Informe o Valor',
                 ),
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               ElevatedButton(
                 onPressed: () async {
                   String name = nameController.text;
@@ -147,7 +147,7 @@ class _DonationPageState extends State<DonationPage> {
                                 );
                                 Clipboard.setData(ClipboardData(text: brcode));
                               },
-                              child: Text("Copiar código"),
+                              child: const Text("Copiar código"),
                             ),
                           ],
                         ),
@@ -155,20 +155,20 @@ class _DonationPageState extends State<DonationPage> {
                     },
                   );
                 },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 40),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 204, 83, 131),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 3, horizontal: 40),
                   child: Text(
                     "Doar",
                     style: TextStyle(
                       fontSize: 20,
                       color: Colors.white,
                     ),
-                  ),
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromARGB(255, 204, 83, 131),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
                   ),
                 ),
               )
@@ -185,23 +185,23 @@ class _DonationPageState extends State<DonationPage> {
         width: double.infinity,
         height: 70,
         alignment: Alignment.topCenter,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(10),
             topRight: Radius.circular(10),
           ),
           color: Color.fromARGB(255, 204, 83, 131),
         ),
-        child: Center(child: Icon(Icons.business_center, size: 50)),
+        child: const Center(child: Icon(Icons.business_center, size: 50)),
       ),
     );
   }
 
   AppBar buildAppBar() {
     return AppBar(
-      backgroundColor: Color.fromRGBO(226, 248, 243, 1),
+      backgroundColor: const Color.fromRGBO(226, 248, 243, 1),
       leading: IconButton(
-        icon: Icon(
+        icon: const Icon(
           Icons.arrow_back,
           color: Colors.black,
         ),

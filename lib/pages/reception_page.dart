@@ -53,7 +53,7 @@ class _ReceptionPageState extends State<ReceptionPage> {
             ),
             
              Column(
-              children: [
+              children: const [
                 SizedBox(height: 75),
                 CircleAvatar(
                   backgroundColor: Color.fromARGB(255, 253, 231, 35),

@@ -33,9 +33,9 @@ class _DetailsPageState extends State<DetailsPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Color.fromRGBO(226, 248, 243, 1),
+          backgroundColor: const Color.fromRGBO(226, 248, 243, 1),
           leading: IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back,
               color: Colors.black,
             ),
@@ -49,17 +49,17 @@ class _DetailsPageState extends State<DetailsPage> {
             width: double.infinity,
             height: 70,
             alignment: Alignment.topCenter,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10),
                 topRight: Radius.circular(10),
               ),
               color: Color.fromARGB(255, 204, 83, 131),
             ),
-            child: Center(child: Icon(Icons.business_center, size: 50)),
+            child: const Center(child: Icon(Icons.business_center, size: 50)),
           ),
         ),
-        backgroundColor: Color.fromARGB(255, 252, 252, 252),
+        backgroundColor: const Color.fromARGB(255, 252, 252, 252),
         body: Hero(
           tag: 'transitionToMainPage',
           child: buildDetailsContainer(
@@ -86,7 +86,7 @@ class _DetailsPageState extends State<DetailsPage> {
     required descAdr,
   }) {
     return Container(
-      margin: EdgeInsets.all(20),
+      margin: const EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -94,10 +94,10 @@ class _DetailsPageState extends State<DetailsPage> {
             backgroundImage: NetworkImage('$image'),
             radius: 100,
           ),
-          SizedBox(height: 15),
+          const SizedBox(height: 15),
           Text(
             '$name\n',
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold,
               fontFamily: 'Cardo',
@@ -109,7 +109,7 @@ class _DetailsPageState extends State<DetailsPage> {
             minFontSize: 14,
             maxFontSize: 26,
             textAlign: TextAlign.justify,
-            style: TextStyle(
+            style: const TextStyle(
               fontFamily: 'Cardo',
               color: Color.fromRGBO(19, 42, 68, 1),
             ),
@@ -122,31 +122,37 @@ class _DetailsPageState extends State<DetailsPage> {
                   "Contato: \n$email \n$number",
                   minFontSize: 12,
                   maxFontSize: 20,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Color.fromRGBO(156, 24, 24, 1),
                   ),
                 ),
               ),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               Flexible(
                 child: AutoSizeText(
                   "Endereço: \n$street \n$descAdr",
                   minFontSize: 12,
                   maxFontSize: 20,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Color.fromRGBO(156, 24, 24, 1),
                   ),
                 ),
               ),
             ],
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Flexible(
             child: ElevatedButton(
               onPressed: () {},
-              child: Padding(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(255, 221, 221, 221),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+              child: const Padding(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 5, horizontal: 50),
+                    EdgeInsets.symmetric(vertical: 5, horizontal: 50),
                 child: AutoSizeText(
                   "Contato",
                   maxFontSize: 30,
@@ -157,15 +163,9 @@ class _DetailsPageState extends State<DetailsPage> {
                   ),
                 ),
               ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color.fromARGB(255, 221, 221, 221),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-              ),
             ),
           ),
-          Flexible(
+          const Flexible(
               child: SizedBox(
             height: 20,
           )),
@@ -181,9 +181,15 @@ class _DetailsPageState extends State<DetailsPage> {
                               cidade: widget.descAdr,
                             )));
               },
-              child: Padding(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(255, 221, 221, 221),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+              child: const Padding(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 5, horizontal: 70),
+                    EdgeInsets.symmetric(vertical: 5, horizontal: 70),
                 child: AutoSizeText(
                   "Doar",
                   maxFontSize: 30,
@@ -192,12 +198,6 @@ class _DetailsPageState extends State<DetailsPage> {
                     fontWeight: FontWeight.bold,
                     color: Color.fromRGBO(19, 42, 68, 1),
                   ),
-                ),
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 221, 221, 221),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
                 ),
               ),
             ),

@@ -147,3 +147,93 @@ INSERT INTO associateds (
     'Rua dos Heróis, 888',
     'Cidade dos Anjos de Quatro Patas'
 );
+
+
+CREATE TABLE notices (
+    id serial primary key not null,
+    titulo text not null,
+    dataNoticia text not null,
+    descricaoNoticia text not null,
+    fonte text not null
+);
+
+-- Exemplo 1
+INSERT INTO notices (titulo, dataNoticia, descricaoNoticia, fonte) VALUES (
+    'Descoberta de Nova Espécie de Borboleta',
+    '2023-08-13',
+    'Pesquisadores encontram borboleta rara na Floresta Amazônica.',
+    'Revista de Biologia'
+);
+
+-- Exemplo 2
+INSERT INTO notices (titulo, dataNoticia, descricaoNoticia, fonte) VALUES (
+    'Resgate de Filhote de Baleia Encalhado',
+    '2023-07-25',
+    'Equipe de resgate salva filhote de baleia após encalhe.',
+    'ONG de Proteção Marinha'
+);
+
+-- Exemplo 3
+INSERT INTO notices (titulo, dataNoticia, descricaoNoticia, fonte) VALUES (
+    'Tartaruga Marinha Faz Jornada de Milhares de Quilômetros',
+    '2023-08-01',
+    'Tartaruga marinha percorre incrível trajetória migratória.',
+    'Estudo de Ecologia Marinha'
+);
+
+-- Exemplo 4
+INSERT INTO notices (titulo, dataNoticia, descricaoNoticia, fonte) VALUES (
+    'Lançamento de Reserva Natural para Elefantes',
+    '2023-07-18',
+    'Nova reserva é criada para proteger elefantes ameaçados.',
+    'Associação de Conservação Animal'
+);
+
+-- Exemplo 5
+INSERT INTO notices (titulo, dataNoticia, descricaoNoticia, fonte) VALUES (
+    'Descoberta de Comportamento Curioso em Macacos',
+    '2023-06-10',
+    'Estudo revela novo comportamento social em macacos.',
+    'Instituto de Primatologia'
+);
+
+-- Exemplo 6
+INSERT INTO notices (titulo, dataNoticia, descricaoNoticia, fonte) VALUES (
+    'Espécie de Pássaro Rara Avistada na Cidade',
+    '2023-08-08',
+    'Ornitólogos registram aparição de pássaro raro em área urbana.',
+    'Sociedade de Ornitologia'
+);
+
+-- Exemplo 7
+INSERT INTO notices (titulo, dataNoticia, descricaoNoticia, fonte) VALUES (
+    'Programa de Conservação Salva Espécie Ameaçada de Extinção',
+    '2023-07-05',
+    'População de lobo selvagem se recupera graças a esforços de conservação.',
+    'Fundação de Preservação da Vida Selvagem'
+);
+
+-- Exemplo 8
+INSERT INTO notices (titulo, dataNoticia, descricaoNoticia, fonte) VALUES (
+    'Reabilitação de Ursos Órfãos Retorna-os à Natureza',
+    '2023-08-20',
+    'Centro de reabilitação auxilia ursos órfãos a voltarem ao habitat natural.',
+    'Centro de Reabilitação da Vida Selvagem'
+);
+
+-- Exemplo 9
+INSERT INTO notices (titulo, dataNoticia, descricaoNoticia, fonte) VALUES (
+    'Pesquisa Revela Comunicação Complexa em Golfinhos',
+    '2023-07-12',
+    'Estudo aponta sofisticados padrões de comunicação entre golfinhos.',
+    'Revista de Cognição Animal'
+);
+
+-- Exemplo 10
+INSERT INTO notices (titulo, dataNoticia, descricaoNoticia, fonte) VALUES (
+    'Novo Santuário para Rinocerontes Negros',
+    '2023-06-28',
+    'Santuário é inaugurado visando a proteção dos rinocerontes negros.',
+    'Organização de Preservação da Fauna'
+);
+
