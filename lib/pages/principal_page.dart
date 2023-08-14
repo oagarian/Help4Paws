@@ -2,7 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:help4paws/services/notices_dao.dart';
 import 'package:help4paws/widgets/notices_widget.dart';
-import '../services/database_connect.dart';
 
 class PrincipalPage extends StatefulWidget {
   const PrincipalPage({Key? key}) : super(key: key);
@@ -12,31 +11,14 @@ class PrincipalPage extends StatefulWidget {
 }
 
 class _PrincipalPageState extends State<PrincipalPage> {
-  bool isLoading = true;
-  List<dynamic> noticesList = [];
+  Future<List<NoticesContainer>> futureNotice = NoticesDAO().getNotices();
 
   @override
   void initState() {
     super.initState();
-    _loadNotices();
   }
 
-  Future<void> _loadNotices() async {
-    try {
-      final conn = await DatabaseConnect.connect();
-      final noticesDAO = NoticesDAO(conn);
-      final results = await noticesDAO.getNotices(5);
-      setState(() {
-        noticesList = results;
-        isLoading = false;
-      });
-    } catch (error) {
-      setState(() {
-        isLoading = false;
-      });
-    }
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -190,25 +172,28 @@ class _PrincipalPageState extends State<PrincipalPage> {
                     )),
               ],
             ),
-            isLoading
-                ? Column(
-                    children: const [
-                       SizedBox(height: 20),
-                       CircularProgressIndicator(),
-                    ],
-                  )
-                : Column(
-                    children: noticesList.map((notice) {
-                      return NoticesContainer(
-                        context: context,
-                        titulo: notice[1],
-                        data: notice[2],
-                        descricaoNoticia: notice[3],
-                        fonte: notice[4],
-                      );
-                    }).toList(),
-                  ),
+            FutureBuilder<List<NoticesContainer>>(
+            future: futureNotice,
+            builder: (context, snapshot) {
+
+
+              if (snapshot.hasData) {
+                var lista = snapshot.data!;
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: lista.length,
+                  itemBuilder: (context, index) {
+                    return lista[index];
+                  },
+                );
+              }
+              return const Center(child: CircularProgressIndicator());
+            }
+            
+          )
           ],
+          
         
         ),
       ),

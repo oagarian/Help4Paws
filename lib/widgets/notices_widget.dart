@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 class NoticesContainer extends StatelessWidget {
   const NoticesContainer({
     Key? key,
-    required this.context,
     required this.titulo,
     required this.data,
     required this.descricaoNoticia,
     required this.fonte,
   }) : super(key: key);
 
-  final BuildContext context;
   final String titulo;
   final String data;
   final String descricaoNoticia;
