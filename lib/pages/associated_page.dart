@@ -10,38 +10,28 @@ class AssociatedPage extends StatefulWidget {
 }
 
 class _AssociatedPageState extends State<AssociatedPage> {
+  List<AssociatedsContainer> associatedsList = [];
+  bool isLoading = true;
+  int limit = 5;
+  int counter = 0;
+  bool isAppBarVisible = true;
+
   @override
   void initState() {
     super.initState();
-    _loadAssociateds(5);
+    _loadAssociateds(limit);
   }
 
-  bool isAppBarVisible = true;
-  Future<List<AssociatedsContainer>> associatedsList = Future.value([]);
-  bool isVisible = false;
-  bool isLoading = true;
-  int count = 0;
-  int amount = 5;
-  @override
-  Future<void> _loadAssociateds(int amount) async {
+  Future<void> _loadAssociateds(int limit) async {
     try {
-      final DAO = AssociatedsDAO();
-      final results = await DAO.getAssociateds(amount: amount);
-      count = await DAO.getTotal();
-      if (results != null) {
-        setState(() {
-          associatedsList = Future.value(results);
-          isLoading = false;
-          isVisible = true;
-          if(amount >= count ) {
-            isVisible = false;
-          }
-        });
-      } else {
-        setState(() {
-          isLoading = false;
-        });
-      }
+      final dao = AssociatedsDAO();
+      final results = await dao.getAssociatedsList();
+      final count = await dao.getTotal();
+      setState(() {
+        associatedsList = results;
+        isLoading = false;
+        counter = count;
+      });
     } catch (error) {
       setState(() {
         isLoading = false;
@@ -49,6 +39,7 @@ class _AssociatedPageState extends State<AssociatedPage> {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
@@ -108,43 +99,35 @@ class _AssociatedPageState extends State<AssociatedPage> {
                       color: Color.fromRGBO(19, 42, 68, 1),
                     ),
                   ),
-                  FutureBuilder<List<AssociatedsContainer>>(
-                      future: associatedsList,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          var lista = snapshot.data!;
-                          return ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: lista.length,
-                            itemBuilder: (context, index) {
-                              return AssociatedsContainer(
-                                image: lista[index].image,
-                                name: lista[index].name,
-                                desc: lista[index].desc,
-                                email: lista[index].email,
-                                number: lista[index].number,
-                                pix: lista[index].pix,
-                                street: lista[index].street,
-                                descAdr: lista[index].descAdr,
-                              );
-                            },
-                          );
-                        } else {
-                          return Center(child: CircularProgressIndicator(),);
-                        }
-
-                      }),
-                  
-                  isVisible ? 
+                  isLoading
+                      ? const CircularProgressIndicator()
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: associatedsList.length,
+                          itemBuilder: (context, index) {
+                            return AssociatedsContainer(
+                              image: associatedsList[index].image,
+                              name: associatedsList[index].name,
+                              desc: associatedsList[index].desc,
+                              email: associatedsList[index].email,
+                              number: associatedsList[index].number,
+                              pix: associatedsList[index].pix,
+                              street: associatedsList[index].street,
+                              descAdr: associatedsList[index].descAdr,
+                            );
+                          },
+                        ),
+                  if (limit < counter)
                     IconButton(
                       icon: const Icon(Icons.keyboard_arrow_down_outlined),
                       onPressed: () {
-                        amount += 5;
-                        _loadAssociateds(amount);
+                        setState(() {
+                          limit += 5;
+                        });
+                        _loadAssociateds(limit);
                       },
-                    ) : const SizedBox()
-                    
+                    ),
                 ],
               ),
             ),

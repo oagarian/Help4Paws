@@ -11,7 +11,6 @@ class PrincipalPage extends StatefulWidget {
 }
 
 class _PrincipalPageState extends State<PrincipalPage> {
-  int amount = 5;
   Future<List<NoticesContainer>> futureNotice = NoticesDAO().getNotices();
 
   @override
@@ -19,7 +18,6 @@ class _PrincipalPageState extends State<PrincipalPage> {
     super.initState();
   }
 
-  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -143,8 +141,8 @@ class _PrincipalPageState extends State<PrincipalPage> {
                       ),
                     ),
                     subtitle: AutoSizeText(
-                      '\n\n O Help4Paws é um aplicativo inovador dedicado a resgatar animais de rua e proporcionar-lhes uma vida digna. Com um simples toque na tela, você pode reportar animais em situação de vulnerabilidade, permitindo que nossa equipe de resgate entre em ação imediatamente. Nossa rede de voluntários comprometidos e abrigos parceiros trabalha incansavelmente para resgatar, fornecer cuidados médicos e encontrar lares amorosos para esses animais. Junte-se a nós e faça a diferença na vida dos animais, tornando-se parte dessa causa nobre.',
-                      textAlign: TextAlign.center,
+                      '\n O Help4Paws é um aplicativo inovador dedicado a resgatar animais de rua e proporcionar-lhes uma vida digna. Com um simples toque na tela, você pode reportar animais em situação de vulnerabilidade, permitindo que nossa equipe de resgate entre em ação. Nossa rede de voluntários comprometidos e abrigos parceiros trabalham incansavelmente para resgatar, fornecer cuidados médicos e encontrar lares amorosos. Junte-se a nós e faça a diferença na vida dos animais, tornando-se parte dessa causa nobre.',
+                      textAlign: TextAlign.justify,
                       minFontSize: 16,
                       maxFontSize: 60,
                       style: TextStyle(
@@ -156,46 +154,59 @@ class _PrincipalPageState extends State<PrincipalPage> {
                 ),
               ),
             ),
-             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                 Icon(
-                  Icons.newspaper,
-                  color: Color.fromARGB(255, 22, 23, 85),
-                  size: 25,
+            //N.A.
+            Card(
+              margin: const EdgeInsets.all(20),
+              elevation: 6,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
+              color: Color.fromRGBO(248, 217, 218, 1),
+              child: Column(children: [
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(
+                        Icons.newspaper,
+                        color: Color.fromRGBO(19, 42, 68, 1),
+                        size: 25,
+                      ),
+                      Text(
+                        ' Notícias do mundo animal',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                          color: Color.fromRGBO(19, 42, 68, 1),
+                          fontFamily: 'Quicksand',
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-                 AutoSizeText('NOTÍCIAS DO MUNDO ANIMAL',
-                    minFontSize: 25,
-                    maxFontSize: 80,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromRGBO(19, 42, 68, 1),
-                    )),
-              ],
-            ),
-            FutureBuilder<List<NoticesContainer>>(
-            future: futureNotice,
-            builder: (context, snapshot) {
-
-
-              if (snapshot.hasData) {
-                var lista = snapshot.data!;
-                return ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: lista.length,
-                  itemBuilder: (context, index) {
-                    return lista[index];
-                  },
-                );
-              }
-              return const Center(child: CircularProgressIndicator());
-            }
-            
-          )
+                FutureBuilder<List<NoticesContainer>>(
+                    future: futureNotice,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        var lista = snapshot.data!;
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: lista.length,
+                          itemBuilder: (context, index) {
+                            return lista[index];
+                          },
+                        );
+                      }
+                      return Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: const Center(child: CircularProgressIndicator()),
+                      );
+                    })
+              ]),
+            )
           ],
-          
-        
         ),
       ),
     );

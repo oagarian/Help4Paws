@@ -1,18 +1,16 @@
-import 'package:postgres/postgres.dart';
+import 'package:mongo_dart/mongo_dart.dart';
 
 class DatabaseConnect {
-  static Future<PostgreSQLConnection> connect() async {
-    final connection = PostgreSQLConnection(
-      'localhost',
-      5432,
-      'help4paws',
-      username: 'root',
-      password: 'password',
-    );
-
-    await connection.open();
-    return connection;
+ static getConnection() async {
+  try {
+     var db = await Db.create("mongodb+srv://admin:admin@help4paws.jmhhf4h.mongodb.net/?retryWrites=true&w=majority");
+    await db.open();
+    return db;
+  } catch(err) {
+    print("Erro encontrado: ");
+    print(err);
   }
+ 
+ }
+ 
 }
-
-

@@ -7,7 +7,7 @@ class NoticesContainer extends StatelessWidget {
     required this.data,
     required this.descricaoNoticia,
     required this.fonte,
-  }) : super(key: key);
+  }) : super(key: key); 
 
   final String titulo;
   final String data;
@@ -36,6 +36,7 @@ class NoticesContainer extends StatelessWidget {
                     titulo,
                     style: const TextStyle(
                       fontSize: 18,
+                      fontFamily: 'Quicksand',
                       fontWeight: FontWeight.bold,
                       color: Color.fromRGBO(19, 42, 68, 1),
                     ),
@@ -45,6 +46,7 @@ class NoticesContainer extends StatelessWidget {
                     descricaoNoticia,
                     style: const TextStyle(
                         fontSize: 16,
+                        fontFamily: 'Quicksand',
                         fontWeight: FontWeight.w600,
                         color: Color.fromRGBO(19, 42, 68, 1)),
                   ),
@@ -55,6 +57,7 @@ class NoticesContainer extends StatelessWidget {
                         data,
                         style: const TextStyle(
                             fontSize: 11,
+                            fontFamily: 'Quicksand',
                             fontWeight: FontWeight.bold,
                             fontStyle: FontStyle.italic,
                             color: Color.fromRGBO(38, 75, 117, 1)),
@@ -66,6 +69,7 @@ class NoticesContainer extends StatelessWidget {
                         fonte,
                         style: const TextStyle(
                             fontSize: 12,
+                            fontFamily: 'Quicksand',
                             fontWeight: FontWeight.bold,
                             fontStyle: FontStyle.italic,
                             color: Color.fromRGBO(38, 75, 117, 1)),
@@ -76,6 +80,7 @@ class NoticesContainer extends StatelessWidget {
               ),
             )
           ],
-        ));
+        )
+        );
   }
 }

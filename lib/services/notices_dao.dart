@@ -1,5 +1,4 @@
 import 'package:help4paws/widgets/notices_widget.dart';
-import 'package:postgres/postgres.dart';
 
 class NoticesDAO {
 
