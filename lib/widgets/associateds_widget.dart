@@ -4,7 +4,6 @@ import 'package:help4paws/pages/details_page.dart';
 class AssociatedsContainer extends StatelessWidget {
   const AssociatedsContainer({
     Key? key,
-    required this.context,
     required this.image,
     required this.name,
     required this.desc,
@@ -15,7 +14,6 @@ class AssociatedsContainer extends StatelessWidget {
     required this.pix,
   }) : super(key: key);
 
-  final BuildContext context;
   final String name;
   final String desc;
   final String email;

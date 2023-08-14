@@ -11,6 +11,7 @@ class PrincipalPage extends StatefulWidget {
 }
 
 class _PrincipalPageState extends State<PrincipalPage> {
+  int amount = 5;
   Future<List<NoticesContainer>> futureNotice = NoticesDAO().getNotices();
 
   @override
