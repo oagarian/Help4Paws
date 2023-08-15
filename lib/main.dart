@@ -23,7 +23,6 @@ class MyApp extends StatelessWidget {
           '/founders': (context) => const FoundersPage(),
           '/associateds': (context) => const AssociatedPage(),
           '/cases': (context) => const CasePage(),
-          '/donations': (context) => const DonationPage(pix: "", sended: false, cidade: "Arapiraca"),
         });
   }
 }
