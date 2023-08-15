@@ -14,22 +14,22 @@ class _AssociatedPageState extends State<AssociatedPage> {
   bool isAppBarVisible = true;
   int limit = 5;
   int counter = 0;
+  int option = 1;
   @override
   void initState() {
     super.initState();
-    _loadAssociateds(5);
+    _loadAssociateds(5, option);
   }
 
-  Future<void> _loadAssociateds(int limit) async {
+  Future<void> _loadAssociateds(int limit, int option) async {
     final dao = AssociatedsDAO();
-    final results = await dao.getAssociateds(limit);
+    final results = await dao.getAssociateds(limit, option);
     final count = await dao.getTotal();
     setState(() {
       _associatedsFuture = Future.value(results);
       counter = count;
     });
   }
-  
 
   @override
   Widget build(BuildContext context) {
@@ -46,12 +46,9 @@ class _AssociatedPageState extends State<AssociatedPage> {
                 backgroundColor: const Color.fromRGBO(226, 248, 243, 1),
                 actions: [
                   PopupMenuButton<String>(
-                    color: const Color.fromARGB(255, 255, 255, 255),
+                    color: Color.fromARGB(255, 34, 33, 51),
+                    onSelected: _handleMenuItemClick,
                     itemBuilder: (context) => [
-                      _buildPopupMenuItem(
-                        "Ordenar por mais próximos",
-                        Icons.gps_fixed,
-                      ),
                       _buildPopupMenuItem(
                         "Ordenar por mais recentes",
                         Icons.arrow_circle_up,
@@ -121,16 +118,23 @@ class _AssociatedPageState extends State<AssociatedPage> {
                     },
                   ),
                   if (limit < counter)
-                    IconButton(
-                      icon: const Icon(Icons.keyboard_arrow_down_outlined),
-                      onPressed: () {
-                        limit += 5;
-                        if (limit <= counter) {
-                          _loadAssociateds(limit);
-                        } else {
-                          _loadAssociateds(counter);
-                        }
-                      },
+                    Container(
+                      decoration: const BoxDecoration(
+                        color: Color.fromARGB(255, 153, 224, 94),
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                      ),
+                      margin: EdgeInsets.all(5),
+                      child: IconButton(
+                        icon: const Icon(Icons.keyboard_arrow_down_outlined),
+                        onPressed: () {
+                          limit += 5;
+                          if (limit <= counter) {
+                            _loadAssociateds(limit, option);
+                          } else {
+                            _loadAssociateds(counter, option);
+                          }
+                        },
+                      ),
                     ),
                 ],
               ),
@@ -161,12 +165,12 @@ class _AssociatedPageState extends State<AssociatedPage> {
     return PopupMenuItem<String>(
       value: title,
       child: Container(
-        color: Colors.white,
+        color: Color.fromARGB(255, 34, 33, 51),
         child: Row(
           children: [
             Icon(
               iconData,
-              color: Colors.black,
+              color: Color.fromARGB(255, 196, 194, 194),
             ),
             const SizedBox(width: 8),
             Text(title),
@@ -174,5 +178,25 @@ class _AssociatedPageState extends State<AssociatedPage> {
         ),
       ),
     );
+  }
+
+  void _handleMenuItemClick(String selectedItem) {
+    if (selectedItem == "Ordenar por mais recentes") {
+      setState(() {
+        if(option != 1) {
+          limit = 5;
+        }
+        option = 1;
+      });
+      _loadAssociateds(limit, option);
+    } else {
+      setState(() {
+        if(option != 2) {
+          limit = 5;
+        }
+        option = 2;
+      });
+      _loadAssociateds(limit, option);
+    }
   }
 }
