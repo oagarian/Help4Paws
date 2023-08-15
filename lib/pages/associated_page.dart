@@ -10,34 +10,26 @@ class AssociatedPage extends StatefulWidget {
 }
 
 class _AssociatedPageState extends State<AssociatedPage> {
-  List<AssociatedsContainer> associatedsList = [];
-  bool isLoading = true;
+  Future<List<AssociatedsContainer>>? _associatedsFuture;
+  bool isAppBarVisible = true;
   int limit = 5;
   int counter = 0;
-  bool isAppBarVisible = true;
-
   @override
   void initState() {
     super.initState();
-    _loadAssociateds(limit);
+    _loadAssociateds(5);
   }
 
   Future<void> _loadAssociateds(int limit) async {
-    try {
-      final dao = AssociatedsDAO();
-      final results = await dao.getAssociatedsList();
-      final count = await dao.getTotal();
-      setState(() {
-        associatedsList = results;
-        isLoading = false;
-        counter = count;
-      });
-    } catch (error) {
-      setState(() {
-        isLoading = false;
-      });
-    }
+    final dao = AssociatedsDAO();
+    final results = await dao.getAssociateds(limit);
+    final count = await dao.getTotal();
+    setState(() {
+      _associatedsFuture = Future.value(results);
+      counter = count;
+    });
   }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -99,33 +91,45 @@ class _AssociatedPageState extends State<AssociatedPage> {
                       color: Color.fromRGBO(19, 42, 68, 1),
                     ),
                   ),
-                  isLoading
-                      ? const CircularProgressIndicator()
-                      : ListView.builder(
+                  FutureBuilder<List<AssociatedsContainer>>(
+                    future: _associatedsFuture,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        var list = snapshot.data!;
+                        return ListView.builder(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          itemCount: associatedsList.length,
+                          itemCount: list.length,
                           itemBuilder: (context, index) {
                             return AssociatedsContainer(
-                              image: associatedsList[index].image,
-                              name: associatedsList[index].name,
-                              desc: associatedsList[index].desc,
-                              email: associatedsList[index].email,
-                              number: associatedsList[index].number,
-                              pix: associatedsList[index].pix,
-                              street: associatedsList[index].street,
-                              descAdr: associatedsList[index].descAdr,
+                              image: list[index].image,
+                              name: list[index].name,
+                              desc: list[index].desc,
+                              email: list[index].email,
+                              number: list[index].number,
+                              pix: list[index].pix,
+                              street: list[index].street,
+                              descAdr: list[index].descAdr,
                             );
                           },
-                        ),
+                        );
+                      } else {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    },
+                  ),
                   if (limit < counter)
                     IconButton(
                       icon: const Icon(Icons.keyboard_arrow_down_outlined),
                       onPressed: () {
-                        setState(() {
-                          limit += 5;
-                        });
-                        _loadAssociateds(limit);
+                        limit += 5;
+                        if (limit <= counter) {
+                          _loadAssociateds(limit);
+                        } else {
+                          _loadAssociateds(counter);
+                        }
                       },
                     ),
                 ],

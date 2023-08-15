@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:help4paws/pages/associated_page.dart';
-import 'package:help4paws/pages/database_test_screen.dart';
 import 'package:help4paws/pages/donations_page.dart';
 import 'package:help4paws/pages/founders_page.dart';
 import 'package:help4paws/pages/reception_page.dart';
@@ -20,7 +19,7 @@ class MyApp extends StatelessWidget {
       '/start': (context) => const ReceptionPage(),
       '/principal': (context) => const PrincipalPage(),
       '/founders': (context) => const FoundersPage(),
-      '/associateds': (context) => const DatabaseTestScreen(),
+      '/associateds': (context) =>  const AssociatedPage(),
       '/donations': (context) => const DonationPage(pix: "", sended: false, cidade: "Arapiraca"),
     });
   }

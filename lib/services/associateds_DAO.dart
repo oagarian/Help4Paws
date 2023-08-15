@@ -1,43 +1,50 @@
-import 'package:help4paws/services/database_connect.dart';
-import 'package:help4paws/widgets/associateds_widget.dart';
 import 'package:mongo_dart/mongo_dart.dart';
+import '../widgets/associateds_widget.dart';
+import 'database_connect.dart';
 
 class AssociatedsDAO {
-  final DbCollection collection;
-
-  AssociatedsDAO() : collection = DatabaseConnect.getConnection().collection("associateds");
-
-  Future<List<AssociatedsContainer>> getAssociatedsList() async {
-    final List<AssociatedsContainer> associatedsList = [];
-
+  final List<AssociatedsContainer> associatedsList = [];
+  Future<List<AssociatedsContainer>> getAssociateds(int limit) async {
+    int counter = 0;
+    Db db;
+    db = await Db.create(
+        'mongodb+srv://admin:admin@help4paws.jmhhf4h.mongodb.net/help4paws?retryWrites=true&w=majority');
+    await db.open();
+    final collection = db.collection("associateds");
     final cursor = await collection.find();
     await cursor.forEach((data) {
-      final name = data['asscName'] as String;
-      final image = data['email'] as String;
-      final desc = data['asscDescription'] as String;
-      final email = data['email'] as String;
-      final number = data['contactNumber'] as String;
-      final pix = data['pix'] as String;
-      final street = data['street'] as String;
-      final descAdr = data['descriptionAddr'] as String;
-
-      final associatedWidget = AssociatedsContainer(
-        image: image, 
-        name: name, 
-        desc: desc, 
-        email: email, 
-        number: number, 
-        street: street, 
-        descAdr: descAdr, 
-        pix: pix);
-      associatedsList.add(associatedWidget);
+      counter++;
+      if (counter <= limit) {
+        final name = data['asscName'] as String;
+        final image = data['logoImage'] as String;
+        final desc = data['asscDescription'] as String;
+        final email = data['email'] as String;
+        final number = data['contactNumber'] as String;
+        final pix = data['pix'] as String;
+        final street = data['street'] as String;
+        final descAdr = data['descriptionAddr'] as String;
+        final associatedWidget = AssociatedsContainer(
+            image: image,
+            name: name,
+            desc: desc,
+            email: email,
+            number: number,
+            street: street,
+            descAdr: descAdr,
+            pix: pix);
+        associatedsList.add(associatedWidget);
+      }
     });
     return associatedsList;
   }
 
   Future<int> getTotal() async {
+    Db db;
+    db = await Db.create(
+        'mongodb+srv://admin:admin@help4paws.jmhhf4h.mongodb.net/help4paws?retryWrites=true&w=majority');
+    await db.open();
+    final collection = db.collection("associateds");
     final amount = await collection.count();
     return amount;
   }
-
 }

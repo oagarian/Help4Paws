@@ -38,6 +38,8 @@ dependencies:
   auto_size_text: ^3.0.0
   shared_preferences: ^2.1.2
   mongo_dart: ^0.9.1
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
