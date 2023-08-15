@@ -1,6 +1,5 @@
 import 'package:mongo_dart/mongo_dart.dart';
 import '../widgets/associateds_widget.dart';
-import 'database_connect.dart';
 
 class AssociatedsDAO {
   final List<AssociatedsContainer> associatedsList = [];
