@@ -60,7 +60,7 @@ class _PrincipalPageState extends State<PrincipalPage> {
                             color: Color.fromRGBO(19, 42, 68, 1),
                           ),
                           onPressed: () {
-                            Navigator.pushNamed(context, '/donations');
+                            Navigator.pushNamed(context, '/cases');
                           },
                         ),
                         IconButton(
