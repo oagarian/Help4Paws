@@ -1,14 +1,17 @@
 import 'package:mongo_dart/mongo_dart.dart';
 import '../widgets/associateds_widget.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class AssociatedsDAO {
   final List<AssociatedsContainer> associatedsList = [];
-  Future<List<AssociatedsContainer>> getAssociateds(
-      int limit, int option) async {
+  Future<List<AssociatedsContainer>> getAssociateds(int limit, int option) async {
+    await dotenv.load(fileName: ".env");
+    var username = dotenv.env['DB_USER'];
+    var password = dotenv.env['DB_PASSWORD'];
     int counter = 0;
     Db db;
     db = await Db.create(
-        'mongodb+srv://admin:admin@help4paws.jmhhf4h.mongodb.net/help4paws?retryWrites=true&w=majority');
+        'mongodb+srv://$username:$password@help4paws.jmhhf4h.mongodb.net/help4paws?retryWrites=true&w=majority');
     await db.open();
     final collection = db.collection("associateds");
     final Stream<Map<String, dynamic>> cursor;
