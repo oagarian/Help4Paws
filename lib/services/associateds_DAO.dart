@@ -16,9 +16,9 @@ class AssociatedsDAO {
     final collection = db.collection("associateds");
     final Stream<Map<String, dynamic>> cursor;
     if(option == 1) {
-      cursor = await collection.find(where.sortBy("_id", descending: true));
+      cursor = collection.find(where.sortBy("_id", descending: true));
     } else {
-      cursor = await collection.find(where.sortBy("_id", descending: false));
+      cursor = collection.find(where.sortBy("_id", descending: false));
     }
     await cursor.forEach((data) {
         counter++;

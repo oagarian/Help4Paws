@@ -46,7 +46,7 @@ class _AssociatedPageState extends State<AssociatedPage> {
                 backgroundColor: const Color.fromRGBO(226, 248, 243, 1),
                 actions: [
                   PopupMenuButton<String>(
-                    color: Color.fromARGB(255, 34, 33, 51),
+                    color: const Color.fromARGB(255, 34, 33, 51),
                     onSelected: _handleMenuItemClick,
                     itemBuilder: (context) => [
                       _buildPopupMenuItem(
@@ -111,7 +111,7 @@ class _AssociatedPageState extends State<AssociatedPage> {
                           },
                         );
                       } else {
-                        return Center(
+                        return const Center(
                           child: CircularProgressIndicator(),
                         );
                       }
@@ -123,7 +123,7 @@ class _AssociatedPageState extends State<AssociatedPage> {
                         color: Color.fromARGB(255, 153, 224, 94),
                         borderRadius: BorderRadius.all(Radius.circular(15)),
                       ),
-                      margin: EdgeInsets.all(5),
+                      margin: const EdgeInsets.all(5),
                       child: IconButton(
                         icon: const Icon(Icons.keyboard_arrow_down_outlined),
                         onPressed: () {
@@ -165,15 +165,15 @@ class _AssociatedPageState extends State<AssociatedPage> {
     return PopupMenuItem<String>(
       value: title,
       child: Container(
-        color: Color.fromARGB(255, 34, 33, 51),
+        color: const Color.fromARGB(255, 34, 33, 51),
         child: Row(
           children: [
             Icon(
               iconData,
-              color: Color.fromARGB(255, 196, 194, 194),
+              color: const Color.fromARGB(255, 196, 194, 194),
             ),
             const SizedBox(width: 8),
-            Text(title),
+            Text(title, style: const TextStyle(color: Colors.white)),
           ],
         ),
       ),
