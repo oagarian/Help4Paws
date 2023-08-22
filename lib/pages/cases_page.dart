@@ -150,7 +150,6 @@ class _CasePageState extends State<CasePage> {
             return ListView.builder(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 return buildContainerCase(
