@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:help4paws/pages/details_page.dart';
+import 'package:help4paws/services/cases_DAO.dart';
+import '../domain/cases.dart';
 
 class CasePage extends StatefulWidget {
   const CasePage({Key? key}) : super(key: key);
@@ -10,6 +11,7 @@ class CasePage extends StatefulWidget {
 }
 
 class _CasePageState extends State<CasePage> {
+  Future<List<Case>> _casesList = CasesDAO().findAll();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -61,8 +63,8 @@ class _CasePageState extends State<CasePage> {
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     children: [
-                      buildContainerCase(
-                        image: Image.asset('assets/images/Gigante.jpg'),
+                      buildList(casesList: _casesList),
+                      /* image: Image.asset('assets/images/Gigante.jpg'),
                         name: 'Gigante',
                         desc:
                             'Um lindo cachorrinho resgatado com raiva que estava dormindo dentro de uma lixeira',
@@ -71,8 +73,7 @@ class _CasePageState extends State<CasePage> {
                         image: Image.asset('assets/images/Grandao.jpg'),
                         name: 'Grandão',
                         desc:
-                            'Um mini doguinho resgatado da rua revirando sacolas de lixo à procura de um caldinho de cana',
-                      ),
+                            'Um mini doguinho resgatado da rua revirando sacolas de lixo à procura de um caldinho de cana',*/
                     ],
                   ),
                 ),
@@ -85,9 +86,7 @@ class _CasePageState extends State<CasePage> {
   }
 
   Container buildContainerCase({
-    required image,
-    required name,
-    required desc,
+    required Case cases,
   }) {
     return Container(
       padding: EdgeInsets.all(20),
@@ -103,7 +102,7 @@ class _CasePageState extends State<CasePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CircleAvatar(
-                  backgroundImage: NetworkImage('$image'),
+                  backgroundImage: NetworkImage('${cases.image}'),
                   radius: 75,
                 ),
                 Expanded(
@@ -111,7 +110,7 @@ class _CasePageState extends State<CasePage> {
                     children: [
                       Center(
                         child: AutoSizeText(
-                          "$name",
+                          "${cases.name}",
                           minFontSize: 20,
                           maxFontSize: 25,
                           style: TextStyle(
@@ -121,7 +120,7 @@ class _CasePageState extends State<CasePage> {
                         ),
                       ),
                       AutoSizeText(
-                        "$desc",
+                        "${cases.desc}",
                         minFontSize: 16,
                         maxFontSize: 20,
                         style: TextStyle(
@@ -138,6 +137,33 @@ class _CasePageState extends State<CasePage> {
             SizedBox(height: 10),
           ],
         ),
+      ),
+    );
+  }
+
+  buildList({required Future<List<Case>> casesList}) {
+    return Container(
+      child: FutureBuilder<List<Case>>(
+        future: casesList,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                return buildContainerCase(
+                  cases: snapshot.data![index],
+                );
+              },
+            );
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
       ),
     );
   }
