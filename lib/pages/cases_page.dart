@@ -102,7 +102,7 @@ class _CasePageState extends State<CasePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CircleAvatar(
-                  backgroundImage: NetworkImage('${cases.image}'),
+                  backgroundImage: AssetImage('${cases.image}'),
                   radius: 75,
                 ),
                 Expanded(

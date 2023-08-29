@@ -123,7 +123,7 @@ class _PrincipalPageState extends State<PrincipalPage> {
               margin: const EdgeInsets.all(20),
               elevation: 6,
               child: const SizedBox(
-                height: 350,
+                height: 380,
                 child: Padding(
                   padding: EdgeInsets.all(20),
                   child: ListTile(

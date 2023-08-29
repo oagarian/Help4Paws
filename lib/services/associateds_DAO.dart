@@ -3,11 +3,19 @@ import '../widgets/associateds_widget.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class AssociatedsDAO {
-  final List<AssociatedsContainer> associatedsList = [];
-  Future<List<AssociatedsContainer>> getAssociateds(int limit, int option) async {
+
+  Future<Map<String, String?>> getCredentials() async {
     await dotenv.load(fileName: ".env");
     var username = dotenv.env['DB_USER'];
     var password = dotenv.env['DB_PASSWORD'];
+    var credentials = {'username': username, 'password': password};
+    return credentials;
+  }
+
+  final List<AssociatedsContainer> associatedsList = [];
+  Future<List<AssociatedsContainer>> getAssociateds(int limit, int option) async {
+    final username = (await getCredentials())['username'];
+    final password = (await getCredentials())['password'];
     int counter = 0;
     Db db;
     db = await Db.create(
@@ -15,11 +23,13 @@ class AssociatedsDAO {
     await db.open();
     final collection = db.collection("associateds");
     final Stream<Map<String, dynamic>> cursor;
+
     if(option == 1) {
       cursor = collection.find(where.sortBy("_id", descending: true));
     } else {
       cursor = collection.find(where.sortBy("_id", descending: false));
     }
+    
     await cursor.forEach((data) {
         counter++;
         if (counter <= limit) {
@@ -49,9 +59,11 @@ class AssociatedsDAO {
   }
 
   Future<int> getTotal() async {
+    final username = (await getCredentials())['username'];
+    final password = (await getCredentials())['password'];
     Db db;
     db = await Db.create(
-        'mongodb+srv://admin:admin@help4paws.jmhhf4h.mongodb.net/help4paws?retryWrites=true&w=majority');
+        'mongodb+srv://$username:$password@help4paws.jmhhf4h.mongodb.net/help4paws?retryWrites=true&w=majority');
     await db.open();
     final collection = db.collection("associateds");
     final amount = await collection.count();
