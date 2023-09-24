@@ -1,72 +1,50 @@
 import 'package:mongo_dart/mongo_dart.dart';
 import '../widgets/associateds_widget.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class AssociatedsDAO {
 
-  Future<Map<String, String?>> getCredentials() async {
-    await dotenv.load(fileName: ".env");
-    var username = dotenv.env['DB_USER'];
-    var password = dotenv.env['DB_PASSWORD'];
-    var credentials = {'username': username, 'password': password};
-    return credentials;
-  }
-
   final List<AssociatedsContainer> associatedsList = [];
   Future<List<AssociatedsContainer>> getAssociateds(int limit, int option) async {
-    final username = (await getCredentials())['username'];
-    final password = (await getCredentials())['password'];
-    int counter = 0;
-    Db db;
-    db = await Db.create(
-        'mongodb+srv://$username:$password@help4paws.jmhhf4h.mongodb.net/help4paws?retryWrites=true&w=majority');
-    await db.open();
-    final collection = db.collection("associateds");
-    final Stream<Map<String, dynamic>> cursor;
-
-    if(option == 1) {
-      cursor = collection.find(where.sortBy("_id", descending: true));
-    } else {
-      cursor = collection.find(where.sortBy("_id", descending: false));
+    int order = 1;
+    switch (option) {
+      case 1:
+        order = 1;
+        break;
+      case 2:
+        order = 3;
+        break;
+      default:
+        order = 1;
+        break;
     }
+    var url = Uri.parse(
+        "http://localhost:8080/user/get?amount=$limit&order=$order");
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+    final List<dynamic> data = json.decode(response.body);
     
-    await cursor.forEach((data) {
-        counter++;
-        if (counter <= limit) {
-          final name = data['asscName'] as String;
-          final image = data['logoImage'] as String;
-          final desc = data['asscDescription'] as String;
-          final email = data['email'] as String;
-          final number = data['contactNumber'] as String;
-          final pix = data['pix'] as String;
-          final street = data['street'] as String;
-          final descAdr = data['descriptionAddr'] as String;
-          final associatedWidget = AssociatedsContainer(
-              image: image,
-              name: name,
-              desc: desc,
-              email: email,
-              number: number,
-              street: street,
-              descAdr: descAdr,
-              pix: pix);
-          associatedsList.add(associatedWidget);
-        
-
-      }
-    });
+    final associatedsList = data.map((item) {
+      return AssociatedsContainer(
+        name: item['Asscname'],
+        image: item['Logoimage'],
+        desc: item['Asscdescription'],
+        email: item['Email'],
+        number: item['Contactnumber'],
+        pix: item['Pix'],
+        street: item['Street'],
+        descAdr: item['Descriptionaddr'],
+      );
+    }).toList();
     return associatedsList;
+  } else {
+    throw Exception('Falha ao carregar os dados da API');
+  }
   }
 
   Future<int> getTotal() async {
-    final username = (await getCredentials())['username'];
-    final password = (await getCredentials())['password'];
-    Db db;
-    db = await Db.create(
-        'mongodb+srv://$username:$password@help4paws.jmhhf4h.mongodb.net/help4paws?retryWrites=true&w=majority');
-    await db.open();
-    final collection = db.collection("associateds");
-    final amount = await collection.count();
-    return amount;
+    return 10;
   }
 }
