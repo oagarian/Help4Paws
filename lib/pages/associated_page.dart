@@ -192,10 +192,10 @@ class _AssociatedPageState extends State<AssociatedPage> {
       _loadAssociateds(limit, option);
     } else {
       setState(() {
-        if(option != 2) {
+        if(option != 3) {
           limit = 5;
         }
-        option = 2;
+        option = 3;
       });
       _loadAssociateds(limit, option);
     }

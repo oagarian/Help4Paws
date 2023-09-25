@@ -8,23 +8,12 @@ class AssociatedsDAO {
 
   final List<AssociatedsContainer> associatedsList = [];
   Future<List<AssociatedsContainer>> getAssociateds(int limit, int option) async {
-    int order = 1;
-    switch (option) {
-      case 1:
-        order = 1;
-        break;
-      case 2:
-        order = 3;
-        break;
-      default:
-        order = 1;
-        break;
-    }
+
     var url = Uri.parse(
-        "http://localhost:8080/user/get?amount=$limit&order=$order");
+        "http://localhost:8080/user/get?amount=$limit&order=$option");
     final response = await http.get(url);
     if (response.statusCode == 200) {
-    final List<dynamic> data = json.decode(response.body);
+    final List<dynamic> data = json.decode((utf8.decode(response.bodyBytes)));
     
     final associatedsList = data.map((item) {
       return AssociatedsContainer(
