@@ -1,6 +1,4 @@
-import 'package:mongo_dart/mongo_dart.dart';
-import '../widgets/associateds_widget.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import '/widgets/associateds_widget.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -34,6 +32,9 @@ class AssociatedsDAO {
   }
 
   Future<int> getTotal() async {
-    return 10;
+    var url = Uri.parse(
+        "http://localhost:8080/user/amount");
+    final response = await http.get(url);
+    return int.parse(response.toString());
   }
 }

@@ -7,6 +7,7 @@ class NoticesContainer extends StatefulWidget {
 
   const NoticesContainer({Key? key, required this.notices}) : super(key: key);
 
+  @override
   State<NoticesContainer> createState() => _NoticesContainerState();
 }
 

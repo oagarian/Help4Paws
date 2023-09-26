@@ -8,6 +8,7 @@ class PrincipalPage extends StatefulWidget {
   const PrincipalPage({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _PrincipalPageState createState() => _PrincipalPageState();
 }
 
@@ -162,13 +163,13 @@ class _PrincipalPageState extends State<PrincipalPage> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30),
               ),
-              color: Color.fromRGBO(248, 217, 218, 1),
+              color: const Color.fromRGBO(248, 217, 218, 1),
               child: Column(children: [
-                Padding(
-                  padding: const EdgeInsets.all(20),
+                const Padding(
+                  padding: EdgeInsets.all(20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       Icon(
                         Icons.newspaper,
                         color: Color.fromRGBO(19, 42, 68, 1),
@@ -200,9 +201,9 @@ class _PrincipalPageState extends State<PrincipalPage> {
                           },
                         );
                       }
-                      return Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: const Center(child: CircularProgressIndicator()),
+                      return const Padding(
+                        padding: EdgeInsets.all(20),
+                        child: Center(child: CircularProgressIndicator()),
                       );
                     })
               ]),

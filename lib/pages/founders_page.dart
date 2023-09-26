@@ -50,9 +50,9 @@ class _FoundersPageState extends State<FoundersPage> {
 
   buildAppBar() {
     return AppBar(
-      backgroundColor: Color.fromRGBO(226, 248, 243, 1),
+      backgroundColor: const Color.fromRGBO(226, 248, 243, 1),
       leading: IconButton(
-        icon: Icon(
+        icon: const Icon(
           Icons.arrow_back,
           color: Colors.black,
         ),
@@ -64,7 +64,7 @@ class _FoundersPageState extends State<FoundersPage> {
   }
 
   buildColumnTitulo() {
-    return Column(
+    return const Column(
       children: [
         SizedBox(height: 50),
         Text(
@@ -79,7 +79,7 @@ class _FoundersPageState extends State<FoundersPage> {
   }
 
   buildColumnSubtitulo() {
-    return Column(
+    return const Column(
       children: [
         SizedBox(height: 5),
         Text(
@@ -97,7 +97,7 @@ class _FoundersPageState extends State<FoundersPage> {
     return Flexible(
       child: Container(
         alignment: Alignment.topCenter,
-        margin: EdgeInsets.all(20),
+        margin: const EdgeInsets.all(20),
         child: Row(
           children: [
             CircleAvatar(
@@ -108,7 +108,7 @@ class _FoundersPageState extends State<FoundersPage> {
             Flexible(
               child: Text(
                     '   $name \n\n      $desc',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
             ),
           ],
@@ -121,10 +121,10 @@ class _FoundersPageState extends State<FoundersPage> {
     return Container(
         width: double.infinity,
         height: 70,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(topLeft: Radius.circular(10)),
             color: Color.fromARGB(255, 204, 83, 131)),
-        child:  Center(child: Icon(Icons.people, size: 50,)),
+        child:  const Center(child: Icon(Icons.people, size: 50,)),
         );
         
   }

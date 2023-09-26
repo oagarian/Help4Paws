@@ -13,8 +13,6 @@ class DBHelper {
       version: 1,
       onCreate: onCreate,
     );
-    print(dbPath);
-
     return db;
   }
 

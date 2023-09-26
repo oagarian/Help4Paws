@@ -21,13 +21,13 @@ class Notices {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
 
-    data['id'] = this.id;
-    data['titulo'] = this.titulo;
-    data['descricao'] = this.descricao;
-    data['data'] = this.data;
-    data['fonte'] = this.fonte;
+    data['id'] = id;
+    data['titulo'] = titulo;
+    data['descricao'] = descricao;
+    data['data'] = data;
+    data['fonte'] = fonte;
     return data;
   }
 }
