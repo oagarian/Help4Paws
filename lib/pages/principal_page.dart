@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:help4paws/services/notices_dao.dart';
 import 'package:help4paws/widgets/notices_widget.dart';
+import '../domain/notices.dart';
 
 class PrincipalPage extends StatefulWidget {
   const PrincipalPage({Key? key}) : super(key: key);
@@ -11,7 +12,7 @@ class PrincipalPage extends StatefulWidget {
 }
 
 class _PrincipalPageState extends State<PrincipalPage> {
-  Future<List<NoticesContainer>> futureNotice = NoticesDAO().getNotices();
+  Future<List<Notices>> futureNotice = NoticesDAO().getNotices();
 
   @override
   void initState() {
@@ -186,7 +187,7 @@ class _PrincipalPageState extends State<PrincipalPage> {
                     ],
                   ),
                 ),
-                FutureBuilder<List<NoticesContainer>>(
+                FutureBuilder<List<Notices>>(
                     future: futureNotice,
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
@@ -195,7 +196,7 @@ class _PrincipalPageState extends State<PrincipalPage> {
                           shrinkWrap: true,
                           itemCount: lista.length,
                           itemBuilder: (context, index) {
-                            return lista[index];
+                            return NoticesContainer(notices: lista[index]);
                           },
                         );
                       }
