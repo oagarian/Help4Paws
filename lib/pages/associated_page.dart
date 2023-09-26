@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:help4paws/services/associateds_DAO.dart';
 import 'package:help4paws/widgets/associateds_widget.dart';
+import 'package:help4paws/widgets/loading_widget.dart';
 
 class AssociatedPage extends StatefulWidget {
   const AssociatedPage({Key? key}) : super(key: key);
@@ -104,7 +105,7 @@ class _AssociatedPageState extends State<AssociatedPage> {
                         );
                       } else {
                         return const Center(
-                          child: CircularProgressIndicator(),
+                          child: LoadingCat(),
                         );
                       }
                     },

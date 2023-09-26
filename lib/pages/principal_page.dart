@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:help4paws/services/notices_dao.dart';
+import 'package:help4paws/widgets/loading_widget.dart';
 import 'package:help4paws/widgets/notices_widget.dart';
 import '../domain/notices.dart';
 
@@ -203,7 +204,7 @@ class _PrincipalPageState extends State<PrincipalPage> {
                       }
                       return const Padding(
                         padding: EdgeInsets.all(20),
-                        child: Center(child: CircularProgressIndicator()),
+                        child: Center(child: LoadingCat()),
                       );
                     })
               ]),

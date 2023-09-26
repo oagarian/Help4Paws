@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:help4paws/services/cases_DAO.dart';
+import 'package:help4paws/widgets/loading_widget.dart';
 import '../domain/cases.dart';
 
 class CasePage extends StatefulWidget {
@@ -156,7 +157,7 @@ class _CasePageState extends State<CasePage> {
           );
         } else {
           return const Center(
-            child: CircularProgressIndicator(),
+            child: LoadingCat(),
           );
         }
       },
