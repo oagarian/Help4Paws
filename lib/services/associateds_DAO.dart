@@ -1,4 +1,4 @@
-import '/widgets/associateds_widget.dart';
+import '../widgets/associateds_widget.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 

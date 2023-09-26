@@ -99,16 +99,7 @@ class _AssociatedPageState extends State<AssociatedPage> {
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: list.length,
                           itemBuilder: (context, index) {
-                            return AssociatedsContainer(
-                              image: list[index].image,
-                              name: list[index].name,
-                              desc: list[index].desc,
-                              email: list[index].email,
-                              number: list[index].number,
-                              pix: list[index].pix,
-                              street: list[index].street,
-                              descAdr: list[index].descAdr,
-                            );
+                            return list[index];
                           },
                         );
                       } else {
