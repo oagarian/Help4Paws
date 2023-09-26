@@ -11,7 +11,7 @@ class CasePage extends StatefulWidget {
 }
 
 class _CasePageState extends State<CasePage> {
-  Future<List<Case>> _casesList = CasesDAO().findAll();
+  Future<List<Case>> _casesList = CasesDAO().getCases();
   @override
   Widget build(BuildContext context) {
     return SafeArea(

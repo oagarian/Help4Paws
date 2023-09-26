@@ -1,22 +1,21 @@
+import 'package:help4paws/db/DBHelper_cases.dart';
 import 'package:help4paws/domain/cases.dart';
+import 'package:sqflite/sqflite.dart';
 
 class CasesDAO {
-  var cases = const [
-    Case(
-      image: 'assets/images/Gigante.jpg',
-      name: 'Gigante',
-      desc:
-          'Um lindo cachorrinho resgatado com raiva que estava dormindo dentro de uma lixeira',
-    ),
-    Case(
-      image: 'assets/images/Grandão.jpg',
-      name: 'Grandão',
-      desc: 'Um lindo cachorrinho resgatado da rua revirando uma lata de lixo',
-    ),
-  ];
+  Future<List<Case>> getCases() async {
+    DBHelperCases dbHelper = DBHelperCases();
+    Database db = await dbHelper.initDB();
 
-  Future<List<Case>> findAll() async {
-    await Future.delayed(const Duration(seconds: 5));
-    return cases;
+    String sql = 'SELECT * FROM cases;';
+    final resultSet = await db.rawQuery(sql);
+
+    List<Case> list = [];
+    for (var json in resultSet) {
+      Case cases = Case.fromJSON(json);
+      list.add(cases);
+    }
+
+    return list;
   }
 }
