@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 
-class NoticesContainer extends StatelessWidget {
-  const NoticesContainer({
-    Key? key,
-    required this.titulo,
-    required this.data,
-    required this.descricaoNoticia,
-    required this.fonte,
-  }) : super(key: key); 
+import '../domain/notices.dart';
 
-  final String titulo;
-  final String data;
-  final String descricaoNoticia;
-  final String fonte;
+class NoticesContainer extends StatefulWidget {
+  final Notices notices;
 
+  const NoticesContainer({Key? key, required this.notices}) : super(key: key);
+
+  State<NoticesContainer> createState() => _NoticesContainerState();
+}
+
+class _NoticesContainerState extends State<NoticesContainer> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,7 +30,7 @@ class NoticesContainer extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    titulo,
+                    widget.notices.titulo,
                     style: const TextStyle(
                       fontSize: 18,
                       fontFamily: 'Quicksand',
@@ -43,7 +40,7 @@ class NoticesContainer extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    descricaoNoticia,
+                    widget.notices.descricao,
                     style: const TextStyle(
                         fontSize: 16,
                         fontFamily: 'Quicksand',
@@ -54,7 +51,7 @@ class NoticesContainer extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        data,
+                        widget.notices.data,
                         style: const TextStyle(
                             fontSize: 11,
                             fontFamily: 'Quicksand',
@@ -66,7 +63,7 @@ class NoticesContainer extends StatelessWidget {
                       const Text(" - "),
                       const SizedBox(width: 10),
                       Text(
-                        fonte,
+                        widget.notices.fonte,
                         style: const TextStyle(
                             fontSize: 12,
                             fontFamily: 'Quicksand',
@@ -80,7 +77,6 @@ class NoticesContainer extends StatelessWidget {
               ),
             )
           ],
-        )
-        );
+        ));
   }
 }
