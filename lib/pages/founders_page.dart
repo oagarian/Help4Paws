@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:help4paws/services/founders.dart';
+import '../db/DBHelper_founders.dart';
+import '../domain/founder.dart';
 
 class FoundersPage extends StatefulWidget {
   const FoundersPage({super.key});
@@ -8,6 +11,8 @@ class FoundersPage extends StatefulWidget {
 }
 
 class _FoundersPageState extends State<FoundersPage> {
+  Future<List<Founder>> futureList = FounderDao().findAll();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -15,31 +20,37 @@ class _FoundersPageState extends State<FoundersPage> {
       home: SafeArea(
         child: Scaffold(
           appBar: buildAppBar(),
-          body: Column(
+          body: ListView(
             children: [
               buildColumnTitulo(),
               buildColumnSubtitulo(),
-              buildContainerAvatar(
-                avatar: 'https://cdn6.campograndenews.com.br/uploads/noticias/2022/06/21/84jnw1cd8irs.jpeg',
-                name: 'Aline Rafaela',
-                desc: 'Desenvolvedora'
-              ),
-              buildContainerAvatar(
-                avatar: 'https://i.pinimg.com/236x/a3/91/73/a391735ab77ae81791174667713bc75f.jpg',
-                name: 'Anderson Cabral',
-                desc: 'Desenvolvedor'
-              ),
-              buildContainerAvatar(
-                avatar: 'https://pbs.twimg.com/media/FXY16QuX0AM5ijD.jpg',
-                name: 'Thiago Natan',
-                desc: 'Desenvolvedor e revisador de código'
-              ),
-              buildContainerAvatar(
-                avatar: 'https://cdn.vox-cdn.com/thumbor/RK0wEhiv4OeVIK4esVZ7mdB-nnw=/0x0:1280x720/920x613/filters:focal(538x258:742x462):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/58547333/ugandan_knuckles.0.jpg',
-                name: 'Viviam Beatriz',
-                desc: 'Desenvolvedora e designer'
-              ),
-          ],),
+              // buildContainerAvatar(
+              //   Avatar:
+              //       'https://cdn6.campograndenews.com.br/uploads/noticias/2022/06/21/84jnw1cd8irs.jpeg',
+              //   name: 'Aline Rafaela',
+              //   desc: 'Desenvolvedora',
+              //   avatar: null,
+              // ),
+              // buildContainerAvatar(
+              //     Avatar:
+              //         'https://i.pinimg.com/236x/a3/91/73/a391735ab77ae81791174667713bc75f.jpg',
+              //     name: 'Anderson Cabral',
+              //     desc: 'Desenvolvedor',
+              //     avatar: null),
+              // buildContainerAvatar(
+              //     Avatar: 'https://pbs.twimg.com/media/FXY16QuX0AM5ijD.jpg',
+              //     name: 'Thiago Natan',
+              //     desc: 'Desenvolvedor e revisador de código',
+              //     avatar: null),
+              // buildContainerAvatar(
+              //     Avatar:
+              //         'https://cdn.vox-cdn.com/thumbor/RK0wEhiv4OeVIK4esVZ7mdB-nnw=/0x0:1280x720/920x613/filters:focal(538x258:742x462):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/58547333/ugandan_knuckles.0.jpg',
+              //     name: 'Viviam Beatriz',
+              //     desc: 'Desenvolvedora e designer',
+              //     avatar: null),
+              buildContainerFoundersPage(),
+            ],
+          ),
           bottomNavigationBar: BottomAppBar(
             child: buildContainerFooter(),
           ),
@@ -54,7 +65,7 @@ class _FoundersPageState extends State<FoundersPage> {
       leading: IconButton(
         icon: const Icon(
           Icons.arrow_back,
-          color: Colors.black,
+          color: Colors.white,
         ),
         onPressed: () {
           Navigator.pop(context);
@@ -64,8 +75,8 @@ class _FoundersPageState extends State<FoundersPage> {
   }
 
   buildColumnTitulo() {
-    return const Column(
-      children: [
+    return Column(
+      children: const [
         SizedBox(height: 50),
         Text(
           'Fundadores',
@@ -79,8 +90,8 @@ class _FoundersPageState extends State<FoundersPage> {
   }
 
   buildColumnSubtitulo() {
-    return const Column(
-      children: [
+    return Column(
+      children: const [
         SizedBox(height: 5),
         Text(
           'CONHEÇA O TIME QUE FUNDOU O HELP4PAWS',
@@ -94,38 +105,63 @@ class _FoundersPageState extends State<FoundersPage> {
   }
 
   buildContainerAvatar({required avatar, required name, required desc}) {
-    return Flexible(
-      child: Container(
-        alignment: Alignment.topCenter,
-        margin: const EdgeInsets.all(20),
-        child: Row(
-          children: [
-            CircleAvatar(
-              radius: 35,
-              backgroundImage: NetworkImage('$avatar')
-                  ,
+    return Container(
+      alignment: Alignment.topCenter,
+      margin: const EdgeInsets.all(20),
+      child: Row(
+        children: [
+          CircleAvatar(
+            radius: 35,
+            backgroundImage: NetworkImage('$avatar'),
+          ),
+          Expanded(
+            child: Text(
+              '   $name \n\n      $desc', textAlign: TextAlign.justify,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            Flexible(
-              child: Text(
-                    '   $name \n\n      $desc',
-                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
   buildContainerFooter() {
     return Container(
-        width: double.infinity,
-        height: 70,
-        decoration: const BoxDecoration(
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(10)),
-            color: Color.fromARGB(255, 204, 83, 131)),
-        child:  const Center(child: Icon(Icons.people, size: 50,)),
+      width: double.infinity,
+      height: 70,
+      decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(10)),
+          color: Color.fromARGB(255, 204, 83, 131)),
+      child: const Center(
+          child: Icon(
+        Icons.people,
+        size: 50,
+      )),
+    );
+  }
+
+  buildContainerFoundersPage() {
+    return FutureBuilder<List<Founder>>(
+      future: futureList,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          var lista = snapshot.data!;
+          return ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: lista.length,
+            itemBuilder: (context, index) {
+              return buildContainerAvatar(
+                  avatar: lista[index].avatar,
+                  name: lista[index].nome,
+                  desc: lista[index].desc);
+            },
+          );
+        }
+        return const Center(
+          child: CircularProgressIndicator(),
         );
-        
+      },
+    );
   }
 }
