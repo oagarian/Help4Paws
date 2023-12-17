@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:help4paws/pages/principal_page.dart';
+
+import '../services/shared_preferences.dart';
 
 class ReceptionPage extends StatefulWidget {
   const ReceptionPage({super.key});
@@ -8,26 +13,34 @@ class ReceptionPage extends StatefulWidget {
 }
 
 class _ReceptionPageState extends State<ReceptionPage> {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: const Color.fromARGB(255, 242, 178, 177),
-        body:  InkWell(
-          onTap: () {
-            Navigator.pushNamed(context, '/principal');
-          },
-          child: Hero(
-            tag: 'transitionToMainPage',
-            child: buildBackground(),
-          )
-        )
-      )
+  verifyTheme() async {
+    bool isWhite = await SharedPrefs().getTheme();
+    await Future.delayed(const Duration(milliseconds:  1500));
+
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) {
+          return PrincipalPage(isWhite: isWhite);
+        },
+      ),
     );
   }
 
-  Stack buildBackground() {
+  @override 
+  void initState() {
+    super.initState();
+    verifyTheme();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return buildBackground();
+  }
+}
+
+Stack buildBackground() {
     return Stack(
           alignment: Alignment.topCenter,
           children: [
@@ -52,7 +65,7 @@ class _ReceptionPageState extends State<ReceptionPage> {
               
             ),
             
-             const Column(
+            Column(
               children: [
                 SizedBox(height: 75),
                 CircleAvatar(
@@ -64,4 +77,3 @@ class _ReceptionPageState extends State<ReceptionPage> {
           ],
         );
   }
-}

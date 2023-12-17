@@ -4,9 +4,11 @@ import 'package:help4paws/services/notices_dao.dart';
 import 'package:help4paws/widgets/loading_widget.dart';
 import 'package:help4paws/widgets/notices_widget.dart';
 import '../domain/notices.dart';
+import '../services/shared_preferences.dart';
 
 class PrincipalPage extends StatefulWidget {
-  const PrincipalPage({Key? key}) : super(key: key);
+  final bool isWhite;
+  const PrincipalPage({Key? key, required this.isWhite}) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
@@ -14,11 +16,26 @@ class PrincipalPage extends StatefulWidget {
 }
 
 class _PrincipalPageState extends State<PrincipalPage> {
+  late bool atualTheme;
   Future<List<Notices>> futureNotice = NoticesDAO().getNotices();
+  Color mediumGrey = Color.fromRGBO(66, 60, 73, 1);
+  Color darkGrey = Color.fromRGBO(34, 36, 39, 1);
+  Color golden = Color.fromRGBO(231, 167, 29, 1);
+  Color darkBlue = Color.fromARGB(255, 22, 49, 90);
+  Color pink = Color.fromARGB(255, 204, 83, 131);
 
+  
   @override
   void initState() {
     super.initState();
+    atualTheme = widget.isWhite;
+  }
+
+  void turnIcon() {
+    setState(() {
+      atualTheme = !atualTheme;
+      SharedPrefs().setTheme(atualTheme);
+    });
   }
 
   @override
@@ -31,12 +48,12 @@ class _PrincipalPageState extends State<PrincipalPage> {
             width: double.infinity,
             height: 70,
             alignment: Alignment.topCenter,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10),
                 topRight: Radius.circular(10),
               ),
-              color: Color.fromARGB(255, 204, 83, 131),
+              color: atualTheme ? Color.fromARGB(255, 204, 83, 131) : mediumGrey,
             ),
             child: Row(
               children: [
@@ -92,34 +109,44 @@ class _PrincipalPageState extends State<PrincipalPage> {
             ),
           ),
         ),
-        backgroundColor: const Color.fromRGBO(247, 247, 247, 1),
+        backgroundColor: atualTheme ? Color.fromRGBO(247, 247, 247, 1) : darkGrey,
         appBar: AppBar(
-          backgroundColor: const Color.fromRGBO(226, 248, 243, 1),
-        ),
+            backgroundColor: atualTheme ? const Color.fromRGBO(226, 248, 243, 1) : darkBlue,
+            actions: [
+              IconButton(
+                icon: Icon(atualTheme ? Icons.wb_sunny : Icons.nightlight_round),
+                color: atualTheme
+                    ? Colors.yellow
+                    : Color.fromARGB(255, 185, 185, 185),
+                onPressed: () {
+                  turnIcon();
+                },
+              ),
+            ]),
         body: ListView(
           children: [
-            const Center(
+            Center(
               child: Text(
                 '\nHelp 4 Paws',
                 style: TextStyle(
                   fontSize: 30,
                   fontFamily: 'Quicksand',
-                  color: Color.fromRGBO(19, 42, 68, 1),
+                  color: atualTheme ? Color.fromRGBO(19, 42, 68, 1) : golden,
                 ),
               ),
             ),
-            const Center(
+             Center(
               child: Text(
                 'DA VIDA DAS RUAS À DOCE VIDA\n',
                 style: TextStyle(
                   fontSize: 10,
                   fontFamily: 'Cardo',
-                  color: Color.fromRGBO(19, 42, 68, 1),
+                  color: atualTheme ? Color.fromRGBO(19, 42, 68, 1) : golden,
                 ),
               ),
             ),
             Card(
-              color: const Color.fromRGBO(205, 80, 133, 1),
+              color: atualTheme ? pink : mediumGrey,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30),
               ),
@@ -166,7 +193,7 @@ class _PrincipalPageState extends State<PrincipalPage> {
               ),
               color: const Color.fromRGBO(248, 217, 218, 1),
               child: Column(children: [
-                const Padding(
+                Padding(
                   padding: EdgeInsets.all(20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,

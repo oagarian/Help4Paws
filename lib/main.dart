@@ -18,7 +18,6 @@ class MyApp extends StatelessWidget {
         initialRoute: '/start',
         routes: {
           '/start': (context) => const ReceptionPage(),
-          '/principal': (context) => const PrincipalPage(),
           '/founders': (context) => const FoundersPage(),
           '/associateds': (context) => const AssociatedPage(),
           '/cases': (context) => const CasePage(),
