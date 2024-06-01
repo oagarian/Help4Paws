@@ -47,3 +47,6 @@ No [BackEnd](https://github.com/oagarian/api-help4paws)
 
   `flutter run`
 
+### Observação:
+Tem-se noção de problemas encontrados no código, tal qual a própria aplicação e seu histórico de commits, o que requer uma refatoração, todavia, não há previsão de quando ocorrerá.
+
