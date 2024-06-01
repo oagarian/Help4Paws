@@ -1,16 +1,49 @@
-# help4paws
+# Help4Paws
 
-A new Flutter project.
+Aplicação desenvolvida em [Flutter](https://flutter.dev/), como meio de aprendizado, e com o objetivo de agregar conhecimento aos envolvidos no projeto.
 
-## Getting Started
+## O que é o projeto
 
-This project is a starting point for a Flutter application.
+O aplicativo Help4Paws (H4P) é uma plataforma que visa facilitar a doação para organizações de cuidados a animais em sitação de rua.
+Nele, é possível listar redes de voluntários, ver detalhes, casos, contato, e até mesmo gerar o QR para realização de um pix anônimo.
 
-A few resources to get you started if this is your first Flutter project:
+## Telas do projeto
+Light theme:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+![Help4Paws LightTeme](https://github.com/oagarian/Help4Paws/assets/102990211/94208707-d528-4da7-9718-d8b8fb388041)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Dark theme:
+
+![Help4Paws DarkTheme](https://github.com/oagarian/Help4Paws/assets/102990211/93ad2ab6-0850-4c7f-b521-44815b503c27)
+
+## Tecnologias usadas
+Durante o projeto, foram utilzizadas diversas tecnologias, sendo:
+No mobile:
+- Flutter (Framework mobile para a linguagem Dart)
+- SQLite para armazenar dados de baixo peso em memória
+- Consumo da [API para gerar QRCode](https://github.com/ceciliadeveza/gerarqrcodepix)
+- SharedPreferences para uma armazenamento de configurações (como LightTheme e DarkTheme)
+No [BackEnd](https://github.com/oagarian/api-help4paws)
+- Golang [https://go.dev/](https://go.dev/)
+- Framework [GoFiber](https://docs.gofiber.io/)
+- Banco de dados PostgreSQL
+- [SQLC](https://sqlc.dev/) para criação de queries automaticamente
+- Docker para passar a API para um container
+
+## Pré-requisitos para rodar o projeto
+- Tenha a linguagem Dart e framework flutter instalado na máquina, veja como [aqui](https://docs.flutter.dev/get-started/install)
+- Para que tudo rode corretamente, é necessário ter a [API](https://github.com/oagarian/api-help4paws) rodando, veja como fazer isso lendo seu README.MD
+- Tenha um dispositivo móvel ativo na máquina
+
+## Como rodar o projeto
+
+- Faça clone do repositório em sua máquina
+
+  `git clone https://github.com/oagarian/Help4Paws`
+- Resolva as dependências
+
+  `flutter pub get`
+- Rode o projeto (necessário haver um dispositivo mobile conectado a máquina, seja ele virtual ou não)
+
+  `flutter run`
+
