@@ -43,6 +43,11 @@ No [BackEnd](https://github.com/oagarian/api-help4paws)
 - Resolva as dependências
 
   `flutter pub get`
+
+- Crie um arquivo `.env` e copie para ele as informaçõs do arquivo [`.env.example`](https://github.com/oagarian/Help4Paws/blob/develop/.env.example) (caso esteja numa máquina linux, apenas execute: 
+
+  `cp .env.example .env`
+
 - Rode o projeto (necessário haver um dispositivo mobile conectado a máquina, seja ele virtual ou não)
 
   `flutter run`
