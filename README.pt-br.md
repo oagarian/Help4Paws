@@ -1,3 +1,4 @@
+[![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/oagarian/Help4Paws/blob/develop/README.md)
 # Help4Paws
 
 Aplicação desenvolvida em [Flutter](https://flutter.dev/), como meio de aprendizado, e com o objetivo de agregar conhecimento aos envolvidos no projeto.
